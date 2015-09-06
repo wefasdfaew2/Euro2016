@@ -1,0 +1,6 @@
+qb_test_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: QBTestBundle:Default:index }
+qb_test_homepage2:
+    path:     /
+    defaults: { _controller: QBTestBundle:Default:index2 }

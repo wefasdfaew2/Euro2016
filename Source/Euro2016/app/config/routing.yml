@@ -1,0 +1,3 @@
+qb_test:
+    resource: "@QBTestBundle/Resources/config/routing.yml"
+    prefix:   /
