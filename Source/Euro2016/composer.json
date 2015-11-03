@@ -1,5 +1,5 @@
 {
-    "name": "bodqu/euro2016",
+    "name": "bodqu/gespodo",
     "license": "proprietary",
     "type": "project",
     "autoload": {
@@ -19,11 +19,39 @@
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~4.0",
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0"
+        "incenteev/composer-parameter-handler": "~2.0",
+
+        "sonata-project/admin-bundle": "2.3.6",
+		"sonata-project/doctrine-orm-admin-bundle": "2.3.2",
+		"sonata-project/core-bundle": "2.3.9",
+		"sonata-project/user-bundle": "2.2.4",
+		"friendsofsymfony/user-bundle": "1.3.3",
+        "sonata-project/easy-extends-bundle": "dev-master",
+        "knplabs/knp-menu-bundle": "~1.1",
+
+        "braincrafted/bootstrap-bundle": "~2.0",
+		"twbs/bootstrap": "3.0.*",
+		"jquery/jquery": "1.11.*",
+        "oyejorge/less.php": "~1.5",
+
+    	"coresphere/console-bundle": "0.3.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
     },
+    "repositories": [
+		{
+  			"type": "package",
+  			"package": {
+  				"name": "jquery/jquery",
+  				"version": "1.11.1",
+  				"dist": {
+  					"url": "http://code.jquery.com/jquery-1.11.1.js",
+  					"type": "file"
+  				}
+  			}
+  		}
+  	],
     "scripts": {
         "post-root-package-install": [
             "SymfonyStandard\\Composer::hookRootPackageInstall"
@@ -35,7 +63,8 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+            "Braincrafted\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::install"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -44,7 +73,8 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+            "Braincrafted\\Bundle\\BootstrapBundle\\Composer\\ScriptHandler::install"
         ]
     },
     "config": {
