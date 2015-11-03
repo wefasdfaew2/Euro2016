@@ -1,0 +1,10 @@
+body {
+	background-image: url('../img/grid-18px-masked.png');
+	background-repeat: repeat-x;
+	background-position: 0px 40px;
+	padding-top: 70px;
+}
+
+.navbar-brand img {
+	height: 20px;
+}

@@ -1,2 +1,6 @@
 Source/symfony.phar
+<<<<<<< HEAD
+Source/composer.phar
+=======
 /node_modules
+>>>>>>> origin/local-quentin
