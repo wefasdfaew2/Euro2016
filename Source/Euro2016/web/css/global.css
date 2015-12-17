@@ -2,6 +2,11 @@ body {
 	background-image: url('../img/grid-18px-masked.png');
 	background-repeat: repeat-x;
 	background-position: 0px 40px;
+	//background-color: #252830;
+	//background: -webkit-linear-gradient(#252830, #202325); /* For Safari 5.1 to 6.0 */
+    //background: -o-linear-gradient(#252830, #202325); /* For Opera 11.1 to 12.0 */
+    //background: -moz-linear-gradient(#252830, #202325); /* For Firefox 3.6 to 15 */
+    //background: linear-gradient(#252830, #202325); /* Standard syntax */
 	padding-top: 70px;
 }
 
