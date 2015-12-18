@@ -40,20 +40,33 @@ security:
         main:
             pattern:        ^/
             anonymous:      true
-            provider:       fos
-            form_login:
-                login_path: fos_user_security_login
-                check_path: fos_user_security_check
-                remember_me: true
+            oauth:
+                failure_path: /connect
+                login_path: /connect
+                check_path: /connect
+                provider: fos
+                resource_owners:
+                    facebook: "/login/check-facebook"
+                oauth_user_provider:
+                    service: hwi_oauth.user.provider.fosub_bridge
             logout:
-                path:       fos_user_security_logout
-            remember_me:
-                key:        %secret%
+                path: /logout
+                target: /connect
+            #provider:       fos
+            #form_login:
+            #    login_path: fos_user_security_login
+            #    check_path: fos_user_security_check
+            #    remember_me: true
+            #logout:
+            #    path:       fos_user_security_logout
+            #remember_me:
+            #    key:        %secret%
 
 
     access_control:
         # URL of FOSUserBundle which need to be available to anonymous users
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/connect, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
