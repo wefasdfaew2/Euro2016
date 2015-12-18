@@ -31,6 +31,26 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @var string $facebook_id
+     */
+    protected $facebook_id;
+
+    /**
+     * @var string $facebook_access_token
+     */
+    protected $facebook_access_token;
+
+    /**
+     * @var string $google_id
+     */
+    protected $google_id;
+
+    /**
+     * @var string $google_access_token
+     */
+    protected $google_access_token;
+
+    /**
      * Get id
      *
      * @return int $id
