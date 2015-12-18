@@ -31,11 +31,6 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @var int $facebookid
-     */
-    protected $facebookid;
-
-    /**
      * Get id
      *
      * @return int $id
@@ -43,15 +38,5 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
-    }
-
-    public function getFacebookid()
-    {
-        return $this->facebookid;
-    }
-
-    public function setFacebookid($value)
-    {
-        $this->facebookid = $value;
     }
 }

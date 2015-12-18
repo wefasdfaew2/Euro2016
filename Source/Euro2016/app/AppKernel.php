@@ -30,7 +30,6 @@ class AppKernel extends Kernel
             new EU\MenuBundle\EUMenuBundle(),
             new EU\MainBundle\EUMainBundle(),
             new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle(),
-            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

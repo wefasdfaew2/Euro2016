@@ -157,9 +157,6 @@ fos_user:
         group_manager: sonata.user.orm.group_manager
     service:
         user_manager: sonata.user.orm.user_manager
-    registration:
-        confirmation:
-            enabled: false
 
 sonata_admin:
     title: ' '
@@ -176,17 +173,3 @@ sonata_admin:
                     content: >
                         <h2>Welcome to the admin panel</h2>
                         <a href="/" class="btn btn-primary">Back to site</a>
-
-hwi_oauth:
-    firewall_name: main
-    connect: ~
-    resource_owners:
-        facebook:
-            type: facebook
-            client_id: %oauth.facebook.id%
-            client_secret: %oauth.facebook.secret%
-            scope: "email"
-    fosub:
-        username_iterations: 30
-        properties:
-            facebook: facebookid
