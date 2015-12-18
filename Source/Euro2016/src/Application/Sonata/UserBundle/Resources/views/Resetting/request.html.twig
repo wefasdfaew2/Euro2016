@@ -1,0 +1,67 @@
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>Resetting</title>
+		{% block stylesheets %}
+		<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" type="text/css" />
+		{% endblock %}
+		{% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
+
+		<!-- Custom styles for this template -->
+		{% trans_default_domain 'FOSUserBundle' %}
+		<style type="text/css">
+			body {
+			  padding-top: 80px;
+			  padding-bottom: 40px;
+			  background-color: #252830;
+			}
+
+			.form-request {
+			  max-width: 330px;
+			  padding: 15px;
+			  margin: 0 auto;
+			}
+			.form-request .form-control {
+			  position: relative;
+			  font-size: 16px;
+			  height: auto;
+			  padding: 10px;
+			  -webkit-box-sizing: border-box;
+				 -moz-box-sizing: border-box;
+					  box-sizing: border-box;
+			}
+			.form-request input[type="text"] {
+			  margin-bottom: -1px;
+			  border-bottom-left-radius: 0;
+			  border-bottom-right-radius: 0;
+			}
+			.form-request input[type="submit"] {
+			  margin-bottom: 10px;
+			  border-top-left-radius: 0;
+			  border-top-right-radius: 0;
+			}
+			.form-request .form-control:focus {
+			  z-index: 2;
+			}
+			.form-request-heading {
+				color: white;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="container">
+            <form class="form-request" action="{{ path('fos_user_resetting_send_email') }}" method="POST">
+				<h2 class="form-request-heading">Reset Password</h2>
+				{% if invalid_username is defined %}
+                <div class="alert alert-danger">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</div>
+                {% endif %}
+                <input type="text" id="username" name="username" required="required" class="form-control" placeholder="{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}"/>
+				<input class="btn btn-lg btn-primary btn-block" type="submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}" />
+				<span><a href="{{ path('eu_main_homepage') }}">Log in</a></span>
+            </form>
+		</div>
+	</body>
+</html>
