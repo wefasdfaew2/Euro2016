@@ -190,6 +190,11 @@ hwi_oauth:
             paths:
                 email:          email
                 profilepicture: picture.data.url
+        google:
+            type:                google
+            client_id:           %google_app_id%
+            client_secret:       %google_app_secret%
+            scope:               "email profile"
     fosub:
         username_iterations: 30
         properties:

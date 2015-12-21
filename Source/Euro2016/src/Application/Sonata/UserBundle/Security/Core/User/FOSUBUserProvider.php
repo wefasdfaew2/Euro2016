@@ -53,6 +53,7 @@ class FOSUBUserProvider extends BaseClass
             $user->setFirstName($response->getFirstName());
             $user->setLastName($response->getLastName());
             $user->setPassword($username);
+            $user->addRole('ROLE_USER');
             $user->setEnabled(true);
             $this->userManager->updateUser($user);
             return $user;
