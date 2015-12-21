@@ -31,6 +31,7 @@ class User extends BaseUser
     protected $id;
 
     /**
+<<<<<<< HEAD
      * @var string $facebook_id
      */
     protected $facebook_id;
@@ -51,6 +52,8 @@ class User extends BaseUser
     protected $google_access_token;
 
     /**
+=======
+>>>>>>> parent of 30edb52... Test OAuth
      * Get id
      *
      * @return int $id
