@@ -9,13 +9,10 @@
         <id name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </id>
-<<<<<<< HEAD
         <field name="facebook_id" type="string" length="255" nullable="true"/>
         <field name="facebook_access_token" type="string" length="255" nullable="true"/>
         <field name="google_id" type="string" length="255" nullable="true"/>
         <field name="google_access_token" type="string" length="255" nullable="true"/>
-=======
->>>>>>> parent of 30edb52... Test OAuth
 
     </entity>
 

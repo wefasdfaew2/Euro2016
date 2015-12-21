@@ -173,7 +173,6 @@ sonata_admin:
                     content: >
                         <h2>Welcome to the admin panel</h2>
                         <a href="/" class="btn btn-primary">Back to site</a>
-<<<<<<< HEAD
 hwi_oauth:
     #this is my custom user provider, created from FOSUBUserProvider - will manage the
     #automatic user registration on your site, with data from the provider (facebook. google, etc.)
@@ -200,5 +199,3 @@ hwi_oauth:
             client_secret:       "%google_app_secret%"
             scope:               "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
     # here you will add one (or more) configurations for resource owners
-=======
->>>>>>> parent of 30edb52... Test OAuth
