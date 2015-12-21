@@ -31,9 +31,11 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @var int $facebookid
+     * @var int $facebook_id
      */
-    protected $facebookid;
+    protected $facebook_id;
+
+    protected $facebook_access_token;
 
     /**
      * Get id
@@ -45,13 +47,23 @@ class User extends BaseUser
         return $this->id;
     }
 
-    public function getFacebookid()
+    public function getFacebookId()
     {
-        return $this->facebookid;
+        return $this->facebook_id;
     }
 
-    public function setFacebookid($value)
+    public function setFacebookId($value)
     {
-        $this->facebookid = $value;
+        $this->facebook_id = $value;
+    }
+
+    public function getFacebookAccessToken()
+    {
+        return $this->facebook_access_token;
+    }
+
+    public function setFacebookAccessToken($value)
+    {
+        $this->facebook_access_token = $value;
     }
 }

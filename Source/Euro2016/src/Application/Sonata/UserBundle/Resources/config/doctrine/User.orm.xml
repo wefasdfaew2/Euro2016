@@ -9,7 +9,8 @@
         <id name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </id>
-        <field name="facebookid" column="facebookid" type="integer" nullable="true" unique="true" />
+        <field name="facebook_id" column="facebook_id" type="string" length="255" nullable="true"/>
+        <field name="facebook_access_token" column="facebook_access_token" type="string" length="255" nullable="true"/>
 
     </entity>
 

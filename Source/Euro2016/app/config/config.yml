@@ -183,10 +183,10 @@ hwi_oauth:
     resource_owners:
         facebook:
             type: facebook
-            client_id: %oauth.facebook.id%
-            client_secret: %oauth.facebook.secret%
+            client_id: %facebook_app_id%
+            client_secret: %facebook_app_secret%
             scope: "email"
     fosub:
         username_iterations: 30
         properties:
-            facebook: facebookid
+            facebook: facebook_id
