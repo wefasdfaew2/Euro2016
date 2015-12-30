@@ -157,6 +157,9 @@ fos_user:
         group_manager: sonata.user.orm.group_manager
     service:
         user_manager: sonata.user.orm.user_manager
+    registration:
+        confirmation:
+            enabled: false
 
 sonata_admin:
     title: ' '
@@ -174,12 +177,6 @@ sonata_admin:
                         <h2>Welcome to the admin panel</h2>
                         <a href="/" class="btn btn-primary">Back to site</a>
 hwi_oauth:
-    #this is my custom user provider, created from FOSUBUserProvider - will manage the
-    #automatic user registration on your site, with data from the provider (facebook. google, etc.)
-    #and also, the connecting part (get the token and the user_id)
-    connect:
-        account_connector: my_user_provider
-    # name of the firewall in which this bundle is active, this setting MUST be set
     firewall_name: main
     connect: ~
     resource_owners:
@@ -199,5 +196,3 @@ hwi_oauth:
             scope:               "email profile"
     fosub:
         username_iterations: 30
-        properties:
-            facebook: facebook_id
