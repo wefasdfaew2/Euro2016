@@ -20,7 +20,7 @@
 				{% endif %}
 			</ul>
 			{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-				<p class="navbar-text navbar-right"><span class="glyphicon glyphicon-user"></span> <a href="{{ path('sonata_user_profile_show') }}" class="navbar-link">{{ app.user.username }}</a> - <a href="{{ path('fos_user_security_logout') }}" class="navbar-link">Log out</a></p>
+				<p class="navbar-text navbar-right"><span class="glyphicon glyphicon-user"></span> <a href="{{ path('sonata_user_profile_show') }}" class="navbar-link">{{ app.user.firstname ~ ' ' ~ app.user.lastname }}</a> - <a href="{{ path('fos_user_security_logout') }}" class="navbar-link">Log out</a></p>
 			{% else %}
 				<button type="button" class="btn btn-primary navbar-btn navbar-right" onclick="window.location='{{ path('fos_user_security_login') }}';">Log in</button>
 			{% endif %}

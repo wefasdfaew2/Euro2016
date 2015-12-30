@@ -34,9 +34,27 @@ class FOSUBUserProvider extends BaseClass
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
         $username = $response->getUsername();
+        $email = $response->getEmail();
+
+        //Check if already registered with this social network
         $user = $this->userManager->findUserBy(array($this->getProperty($response) => $username));
+
+        //Check if already registered with a different social network
+        if($email <> '' AND null === $user)
+        {
+            $user = $this->userManager->findUserBy(array('emailCanonical' => strtolower($email)));
+            $service = $response->getResourceOwner()->getName();
+            $setter = 'set'.ucfirst($service);
+            $setter_id = $setter.'Id';
+            $setter_token = $setter.'AccessToken';
+            $user->$setter_id($username);
+            $user->$setter_token($response->getAccessToken());
+            $this->userManager->updateUser($user);
+        }
+
         //when the user is registrating
-        if (null === $user) {
+        if (null === $user)
+        {
             $service = $response->getResourceOwner()->getName();
             $setter = 'set'.ucfirst($service);
             $setter_id = $setter.'Id';
@@ -48,8 +66,11 @@ class FOSUBUserProvider extends BaseClass
             //I have set all requested data with the user's username
             //modify here with relevant data
             $user->setUsername($username);
-            $user->setEmail($username);
+            $user->setEmail($response->getEmail());
+            $user->setFirstName($response->getFirstName());
+            $user->setLastName($response->getLastName());
             $user->setPassword($username);
+            $user->addRole('ROLE_USER');
             $user->setEnabled(true);
             $this->userManager->updateUser($user);
             return $user;
