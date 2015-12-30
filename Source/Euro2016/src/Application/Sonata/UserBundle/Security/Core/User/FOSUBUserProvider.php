@@ -34,10 +34,27 @@ class FOSUBUserProvider extends BaseClass
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
         $username = $response->getUsername();
-        //var_dump($response);
+        $email = $response->getEmail();
+
+        //Check if already registered with this social network
         $user = $this->userManager->findUserBy(array($this->getProperty($response) => $username));
+
+        //Check if already registered with a different social network
+        if($email <> '' AND null === $user)
+        {
+            $user = $this->userManager->findUserBy(array('emailCanonical' => strtolower($email)));
+            $service = $response->getResourceOwner()->getName();
+            $setter = 'set'.ucfirst($service);
+            $setter_id = $setter.'Id';
+            $setter_token = $setter.'AccessToken';
+            $user->$setter_id($username);
+            $user->$setter_token($response->getAccessToken());
+            $this->userManager->updateUser($user);
+        }
+
         //when the user is registrating
-        if (null === $user) {
+        if (null === $user)
+        {
             $service = $response->getResourceOwner()->getName();
             $setter = 'set'.ucfirst($service);
             $setter_id = $setter.'Id';

@@ -40,6 +40,13 @@ security:
         main:
             pattern:        ^/
             anonymous:      true
+            remember_me:
+                key: %secret%
+                lifetime: 31536000 # 365 days in seconds
+                path: /
+                domain: ~ # Defaults to the current domain from $_SERVER
+                always_remember_me: true
+                remember_me_parameter: _remember_me
             oauth:
                 failure_path: /connect
                 login_path: /connect
