@@ -25,38 +25,59 @@ use Sonata\UserBundle\Entity\BaseUser as BaseUser;
  */
 class User extends BaseUser
 {
-    /**
-     * @var int $id
-     */
+
     protected $id;
 
-    /**
-     * @var string $facebook_id
-     */
     protected $facebook_id;
 
-    /**
-     * @var string $facebook_access_token
-     */
     protected $facebook_access_token;
 
-    /**
-     * @var string $google_id
-     */
     protected $google_id;
 
-    /**
-     * @var string $google_access_token
-     */
     protected $google_access_token;
 
-    /**
-     * Get id
-     *
-     * @return int $id
-     */
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getFacebookId()
+    {
+        return $this->facebook_id;
+    }
+
+    public function setFacebookId($value)
+    {
+        $this->facebook_id = $value;
+    }
+
+    public function getFacebookAccessToken()
+    {
+        return $this->facebook_access_token;
+    }
+
+    public function setFacebookAccessToken($value)
+    {
+        $this->facebook_access_token = $value;
+    }
+
+    public function getGoogleId()
+    {
+        return $this->google_id;
+    }
+
+    public function setGoogleId($value)
+    {
+        $this->google_id = $value;
+    }
+
+    public function getGoogleAccessToken()
+    {
+        return $this->google_access_token;
+    }
+
+    public function setGoogleAccessToken($value)
+    {
+        $this->google_access_token = $value;
     }
 }
