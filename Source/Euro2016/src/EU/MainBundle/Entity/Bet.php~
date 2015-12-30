@@ -43,6 +43,13 @@ class Bet
     private $createdAt;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updatedAt", type="datetime")
+     */
+    private $updatedAt;
+
+    /**
      * @ORM\ManyToOne(targetEntity="EU\MainBundle\Entity\Game")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -138,5 +145,74 @@ class Bet
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Set game
+     *
+     * @param \EU\MainBundle\Entity\Game $game
+     * @return Bet
+     */
+    public function setGame(\EU\MainBundle\Entity\Game $game)
+    {
+        $this->game = $game;
+
+        return $this;
+    }
+
+    /**
+     * Get game
+     *
+     * @return \EU\MainBundle\Entity\Game
+     */
+    public function getGame()
+    {
+        return $this->game;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $user
+     * @return Bet
+     */
+    public function setUser(\Application\Sonata\UserBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Application\Sonata\UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set pot
+     *
+     * @param \EU\MainBundle\Entity\Pot $pot
+     * @return Bet
+     */
+    public function setPot(\EU\MainBundle\Entity\Pot $pot)
+    {
+        $this->pot = $pot;
+
+        return $this;
+    }
+
+    /**
+     * Get pot
+     *
+     * @return \EU\MainBundle\Entity\Pot
+     */
+    public function getPot()
+    {
+        return $this->pot;
     }
 }

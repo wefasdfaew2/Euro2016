@@ -1,0 +1,59 @@
+{% extends "EUMainBundle::layout.html.twig" %}
+
+{% block title %}
+  Home - {{ parent() }}
+{% endblock %}
+
+{% block content %}
+<style>
+#form {
+    margin-bottom: 25px;
+    max-width: 500px;
+}
+</style>
+
+<script type="text/javascript">
+$(document).ready(function (){
+    //$('#submitButton').click(submitTester());
+});
+
+function submitTester()
+{
+    $.ajax({
+        url: $('#actionUrl').val(),
+        method: $('#methodUsed').val(),
+        //data:
+    }).done(function(data, textStatus, jqXHR)
+    {
+        $('#response pre').html(JSON.stringify(data, null, 4));
+    });
+    return false;
+}
+</script>
+
+<h1>Tester</h1>
+<div class="container">
+    <div id="form">
+        <h3>Form</h2>
+        <div class="form-group">
+            <label for="actionUrl">Action URL</label>
+            <input type="text" name="actionUrl" class="form-control" id="actionUrl" placeholder="bet/1">
+        </div>
+        <div class="form-group">
+            <label for="methodUsed">Method</label>
+            <select name="methodUsed" class="form-control" id="methodUsed">
+                <option value="GET">GET</option>
+                <option value="PUT">PUT</option>
+                <option value="POST">POST</option>
+                <option value="DELETE">DELETE</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" id="submitButton" onClick="submitTester()">Submit</button>
+    </div>
+    <div id="response">
+        <h3>Response</h2>
+        <pre>
+        </pre>
+    </div>
+</div>
+{% endblock %}

@@ -3,14 +3,16 @@
 namespace EU\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * Bet
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="EU\MainBundle\Entity\BetRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
-class Bet
+class Bet implements JsonSerializable
 {
     /**
      * @var integer
@@ -41,6 +43,13 @@ class Bet
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updatedAt", type="datetime")
+     */
+    private $updatedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="EU\MainBundle\Entity\Game")
@@ -156,7 +165,7 @@ class Bet
     /**
      * Get game
      *
-     * @return \EU\MainBundle\Entity\Game 
+     * @return \EU\MainBundle\Entity\Game
      */
     public function getGame()
     {
@@ -179,7 +188,7 @@ class Bet
     /**
      * Get user
      *
-     * @return \Application\Sonata\UserBundle\Entity\User 
+     * @return \Application\Sonata\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -202,10 +211,78 @@ class Bet
     /**
      * Get pot
      *
-     * @return \EU\MainBundle\Entity\Pot 
+     * @return \EU\MainBundle\Entity\Pot
      */
     public function getPot()
     {
         return $this->pot;
     }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Bet
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Update updatedAt to current time
+     *
+     * @ORM\PreUpdate
+     */
+     public function updateUpdatedAt()
+     {
+         $this->setUpdatedAt(new \Datetime());
+     }
+
+     /**
+      * Set createdAt to current time
+      *
+      * @ORM\PrePersist
+      */
+      public function updateCreatedAt()
+      {
+          $this->setCreatedAt(new \Datetime());
+          $this->updateUpdatedAt();
+      }
+
+      public function getBetScores()
+      {
+          return $this->score1.' - '.$this->score2;
+      }
+
+      public function __toString()
+      {
+          return '('.$this->getBetScores().') on '.$this->game;
+      }
+
+      public function jsonSerialize()
+      {
+          return [
+              'id'          => $this->id,
+              'user_id'     => $this->user->getId(),
+              'game_id'     => $this->game->getId(),
+              'pot_id'      => $this->pot->getId(),
+              'score1'      => $this->score1,
+              'score2'      => $this->score2,
+              'createdAt'   => $this->createdAt,
+              'updatedAt'   => $this->updatedAt
+          ];
+      }
 }

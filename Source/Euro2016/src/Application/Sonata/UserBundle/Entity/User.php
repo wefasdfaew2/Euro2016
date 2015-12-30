@@ -80,4 +80,9 @@ class User extends BaseUser
     {
         $this->google_access_token = $value;
     }
+
+    public function __toString()
+    {
+        return $this->firstname.' '.$this->lastname;
+    }
 }

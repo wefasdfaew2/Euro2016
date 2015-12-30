@@ -3,6 +3,7 @@
 namespace EU\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * Team
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="EU\MainBundle\Entity\TeamRepository")
  */
-class Team
+class Team implements JsonSerializable
 {
     /**
      * @var integer
@@ -39,7 +40,7 @@ class Team
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -62,7 +63,7 @@ class Team
     /**
      * Get longName
      *
-     * @return string 
+     * @return string
      */
     public function getLongName()
     {
@@ -85,10 +86,19 @@ class Team
     /**
      * Get shortName
      *
-     * @return string 
+     * @return string
      */
     public function getShortName()
     {
         return $this->shortName;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id'          => $this->id,
+            'longName'    => $this->longName,
+            'shortName'   => $this->shortName
+        ];
     }
 }

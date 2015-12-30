@@ -3,6 +3,7 @@
 namespace EU\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * Game
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="EU\MainBundle\Entity\GameRepository")
  */
-class Game
+class Game implements JsonSerializable
 {
     /**
      * @var integer
@@ -24,14 +25,14 @@ class Game
     /**
      * @var integer
      *
-     * @ORM\Column(name="score1", type="integer")
+     * @ORM\Column(name="score1", type="integer", nullable=true)
      */
     private $score1;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="score2", type="integer")
+     * @ORM\Column(name="score2", type="integer", nullable=true)
      */
     private $score2;
 
@@ -150,7 +151,7 @@ class Game
     /**
      * Get team1
      *
-     * @return \EU\MainBundle\Entity\Team 
+     * @return \EU\MainBundle\Entity\Team
      */
     public function getTeam1()
     {
@@ -173,10 +174,32 @@ class Game
     /**
      * Get team2
      *
-     * @return \EU\MainBundle\Entity\Team 
+     * @return \EU\MainBundle\Entity\Team
      */
     public function getTeam2()
     {
         return $this->team2;
+    }
+
+    public function getStartTimeFormatted()
+    {
+        return date_format($this->startTime, 'j/n/y H:i');
+    }
+
+    public function __toString()
+    {
+        return $this->team1->getShortName().'-'.$this->team2->getShortName().' at '.$this->getStartTimeFormatted();
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id'          => $this->id,
+            'team1_id'    => $this->team1->getId(),
+            'team2_id'    => $this->team2->getId(),
+            'score1'      => $this->score1,
+            'score2'      => $this->score2,
+            'startTime'   => $this->startTime
+        ];
     }
 }

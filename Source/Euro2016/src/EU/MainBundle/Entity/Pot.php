@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="EU\MainBundle\Entity\PotRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Pot
 {
@@ -31,9 +32,9 @@ class Pot
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createAt", type="datetime")
+     * @ORM\Column(name="createdAt", type="datetime")
      */
-    private $createAt;
+    private $createdAt;
 
     /**
      * @var string
@@ -83,24 +84,24 @@ class Pot
     }
 
     /**
-     * Set createAt
+     * Set createdAt
      *
-     * @param \DateTime $createAt
+     * @param \DateTime $createdAt
      * @return Pot
      */
-    public function setCreateAt($createAt)
+    public function setCreatedAt($createdAt)
     {
-        $this->createAt = $createAt;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * Get createAt
+     * Get createdAt
      *
      * @return \DateTime
      */
-    public function getCreateAt()
+    public function getCreatedAt()
     {
         return $this->createAt;
     }
@@ -144,10 +145,20 @@ class Pot
     /**
      * Get manager
      *
-     * @return \Application\Sonata\UserBundle\Entity\User 
+     * @return \Application\Sonata\UserBundle\Entity\User
      */
     public function getManager()
     {
         return $this->manager;
     }
+
+    /**
+     * Set createdAt to current time
+     *
+     * @ORM\PrePersist
+     */
+     public function updateCreatedAt()
+     {
+         $this->setCreatedAt(new \Datetime());
+     }
 }

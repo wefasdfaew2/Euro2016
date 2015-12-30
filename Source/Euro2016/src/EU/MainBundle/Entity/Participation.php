@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="EU\MainBundle\Entity\ParticipationRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Participation
 {
@@ -31,7 +32,7 @@ class Participation
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="paidAt", type="datetime")
+     * @ORM\Column(name="paidAt", type="datetime", nullable=true)
      */
     private $paidAt;
 
@@ -149,4 +150,14 @@ class Participation
     {
         return $this->pot;
     }
+
+    /**
+     * Set createdAt to current time
+     *
+     * @ORM\PrePersist
+     */
+     public function updateCreatedAt()
+     {
+         $this->setCreatedAt(new \Datetime());
+     }
 }
