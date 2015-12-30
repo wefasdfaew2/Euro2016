@@ -196,3 +196,6 @@ hwi_oauth:
             scope:               "email profile"
     fosub:
         username_iterations: 30
+        properties:
+            facebook: facebook_id
+            google: google_id
