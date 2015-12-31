@@ -32,7 +32,7 @@ class Team implements JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="shortName", type="string", length=3)
+     * @ORM\Column(name="shortName", type="string", length=3, unique=true)
      */
     private $shortName;
 
@@ -91,6 +91,11 @@ class Team implements JsonSerializable
     public function getShortName()
     {
         return $this->shortName;
+    }
+
+    public function __toString()
+    {
+        return $this->longName;
     }
 
     public function jsonSerialize()

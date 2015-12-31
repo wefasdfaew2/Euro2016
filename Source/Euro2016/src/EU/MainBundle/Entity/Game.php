@@ -188,7 +188,14 @@ class Game implements JsonSerializable
 
     public function __toString()
     {
-        return $this->team1->getShortName().'-'.$this->team2->getShortName().' at '.$this->getStartTimeFormatted();
+        if($this->id === null)
+        {
+            return 'New game';
+        }
+        else
+        {
+            return $this->team1->getShortName().'-'.$this->team2->getShortName().' at '.$this->getStartTimeFormatted();
+        }
     }
 
     public function jsonSerialize()

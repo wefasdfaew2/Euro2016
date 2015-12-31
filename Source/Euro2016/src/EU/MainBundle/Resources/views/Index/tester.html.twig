@@ -10,20 +10,57 @@
     margin-bottom: 25px;
     max-width: 500px;
 }
+#error-box {
+    margin-top: 10px;
+}
 </style>
 
 <script type="text/javascript">
-$(document).ready(function (){
-    //$('#submitButton').click(submitTester());
+$(document).ready(function(){
+    $('#submitButton').click(function()
+    {
+        submitTester();
+    });
+    $('#dataSent').change(function()
+    {
+        var dataSent = '';
+        $(this).parent().removeClass('has-error');
+        $('#error-box').removeClass('alert-danger').html('');
+        try
+        {
+            dataSent = JSON.stringify(JSON.parse($(this).val()), null, 4);
+            $(this).val(dataSent);
+        }
+        catch (e)
+        {
+            $(this).parent().addClass('has-error');
+            $('#error-box').addClass('alert-danger').html('JSON parsing error : ' + e);
+        }
+    })
 });
 
 function submitTester()
 {
-    $.ajax({
+    var settings = {
         url: $('#actionUrl').val(),
-        method: $('#methodUsed').val(),
-        //data:
-    }).done(function(data, textStatus, jqXHR)
+        method: $('#methodUsed').val()
+    };
+
+    if($('#methodUsed').val() == 'POST' || $('#methodUsed').val() == 'PUT')
+    {
+        var dataSent = '';
+        try
+        {
+            dataSent = JSON.parse($('#dataSent').val());
+            settings['data'] = dataSent;
+        }
+        catch (e)
+        {
+            $('#error-box').addClass('alert-danger').html('JSON parsing error : ' + e);
+        }
+    }
+
+    $.ajax(settings).done(function(data, textStatus, jqXHR)
     {
         $('#response pre').html(JSON.stringify(data, null, 4));
     });
@@ -36,11 +73,11 @@ function submitTester()
     <div id="form">
         <h3>Form</h2>
         <div class="form-group">
-            <label for="actionUrl">Action URL</label>
+            <label class="control-label" for="actionUrl">Action URL</label>
             <input type="text" name="actionUrl" class="form-control" id="actionUrl" placeholder="bet/1">
         </div>
         <div class="form-group">
-            <label for="methodUsed">Method</label>
+            <label class="control-label" for="methodUsed">Method</label>
             <select name="methodUsed" class="form-control" id="methodUsed">
                 <option value="GET">GET</option>
                 <option value="PUT">PUT</option>
@@ -48,7 +85,13 @@ function submitTester()
                 <option value="DELETE">DELETE</option>
             </select>
         </div>
-        <button class="btn btn-primary" id="submitButton" onClick="submitTester()">Submit</button>
+        <div class="form-group">
+            <label class="control-label" for="dataSent">Data sent</label>
+            <textarea class="form-control" name="dataSent" id="dataSent" rows="10">{}</textarea>
+            <div id="error-box" class="alert" role="alert">
+            </div>
+        </div>
+        <button class="btn btn-primary" id="submitButton">Submit</button>
     </div>
     <div id="response">
         <h3>Response</h2>

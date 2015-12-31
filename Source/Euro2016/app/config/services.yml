@@ -8,3 +8,13 @@ services:
         class: "%my_user_provider.class%"
         #this is the place where the properties are passed to the UserProvider - see config.yml
         arguments: [@fos_user.user_manager,{facebook: facebook_id, google: google_id}]
+    admin.team:
+        class: EU\MainBundle\Admin\TeamAdmin
+        arguments: [~, EU\MainBundle\Entity\Team, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Content, label: Teams }
+    admin.game:
+        class: EU\MainBundle\Admin\GameAdmin
+        arguments: [~, EU\MainBundle\Entity\Game, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Content, label: Games }

@@ -58,7 +58,25 @@ class BetController extends Controller
 
     public function createAction()
     {
+        $request = $this->getRequest();
 
+
+
+        $response = array(
+            'status_code' => 200,
+            'data' => array(
+                'message'	=> $request->request->all(),
+                'type'      => 'success',
+                'buttons'   => array(
+                    array(
+                        'type'  => 'success',
+                        'link'  => $this->generateUrl('eu_main_homepage'),
+                        'text'  => 'Dashboard'
+                    )
+                )
+            )
+        );
+        return new JsonResponse($response);
     }
 
     public function readAction($id)
@@ -111,7 +129,23 @@ class BetController extends Controller
 
     public function updateAction($id)
     {
+        $request = $this->getRequest();
 
+        $response = array(
+            'status_code' => 200,
+            'data' => array(
+                'message'	=> $request->request->all(),
+                'type'      => 'success',
+                'buttons'   => array(
+                    array(
+                        'type'  => 'success',
+                        'link'  => $this->generateUrl('eu_main_homepage'),
+                        'text'  => 'Dashboard'
+                    )
+                )
+            )
+        );
+        return new JsonResponse($response);
     }
 
     public function deleteAction($id)

@@ -19,6 +19,7 @@
 				<li><a href="{{ path('eu_game_list') }}">Teams</a></li>
 				{% if is_granted("ROLE_ADMIN") %}
 				<li><a href="{{ path('sonata_admin_dashboard') }}">Admin</a></li>
+				<li><a href="{{ path('eu_main_tester') }}">Tester</a></li>
 				{% endif %}
 				{% endif %}
 			</ul>
