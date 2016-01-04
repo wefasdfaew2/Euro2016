@@ -5,36 +5,36 @@ eu_main_tester:
     path: /test
     defaults: { _controller: EUMainBundle:Index:test}
 eu_bet_list:
-    path: /bet
+    path: /bets
     defaults: { _controller: EUMainBundle:Bet:list}
     methods: [GET]
 eu_bet_create:
-    path:   /bet
+    path:   /bets
     defaults: { _controller: EUMainBundle:Bet:create }
     methods: [POST]
 eu_bet_read:
-    path:   /bet/{id}
+    path:   /bets/{id}
     defaults: { _controller: EUMainBundle:Bet:read }
     methods: [GET]
     requirements:
         id: "\d+"
 eu_bet_update:
-    path:   /bet/{id}
+    path:   /bets/{id}
     defaults: { _controller: EUMainBundle:Bet:update }
     methods: [POST|PUT]
     requirements:
         id: "\d+"
 eu_bet_delete:
-    path:   /bet/{id}
+    path:   /bets/{id}
     defaults: { _controller: EUMainBundle:Bet:delete }
     methods: [DELETE]
     requirements:
         id: "\d+"
 eu_game_list:
-    path: /game
+    path: /games
     defaults: { _controller: EUMainBundle:Game:list}
     methods: [GET]
 eu_pot_list:
-    path: /pot
+    path: /pots
     defaults: { _controller: EUMainBundle:Pot:list}
     methods: [GET]

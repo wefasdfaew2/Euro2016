@@ -16,17 +16,17 @@ class IndexController extends Controller
         $team1 = new Team();
         $team1->setShortName('BEL');
         $team1->setLongName('Belgique');
-        $em->persist($team1);
+        //$em->persist($team1);
         $team2 = new Team();
         $team2->setShortName('FRA');
         $team2->setLongName('France');
-        $em->persist($team2);
+        //$em->persist($team2);
 
         $game = new Game();
         $game->setStartTime(new \DateTime());
         $game->setTeam1($team1);
         $game->setTeam2($team2);
-        $em->persist($game);
+        //$em->persist($game);
 
         $pot = new Pot();
         $pot->setName('Test Pot');
@@ -40,7 +40,7 @@ class IndexController extends Controller
         $bet->setGame($game);
         $bet->setUser($this->getUser());
         $bet->setPot($pot);
-        $em->persist($bet);
+        //$em->persist($bet);
         //$em->flush();
         //echo($bet);
         return $this->render('EUMainBundle:Index:index.html.twig');

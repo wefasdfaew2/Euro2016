@@ -62,9 +62,21 @@ function submitTester()
 
     $.ajax(settings).done(function(data, textStatus, jqXHR)
     {
-        $('#response pre').html(JSON.stringify(data, null, 4));
+        handleAjaxResponse(data, textStatus, jqXHR);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown)
+    {
+        handleAjaxResponse(errorThrown, textStatus, jqXHR);
     });
     return false;
+}
+
+function handleAjaxResponse(data, textStatus, jqXHR)
+{
+    $('#responseData').html(JSON.stringify(data, null, 4));
+    $('#responseHeaders').html(jqXHR.getAllResponseHeaders());
+    $('#statusText').val(textStatus);
+    $('#statusCode').val(jqXHR.status);
 }
 </script>
 
@@ -74,7 +86,7 @@ function submitTester()
         <h3>Form</h2>
         <div class="form-group">
             <label class="control-label" for="actionUrl">Action URL</label>
-            <input type="text" name="actionUrl" class="form-control" id="actionUrl" placeholder="bet/1">
+            <input type="text" name="actionUrl" class="form-control" id="actionUrl" placeholder="bets/1" value="bets">
         </div>
         <div class="form-group">
             <label class="control-label" for="methodUsed">Method</label>
@@ -95,8 +107,24 @@ function submitTester()
     </div>
     <div id="response">
         <h3>Response</h2>
-        <pre>
-        </pre>
+        <div class="form-group">
+            <label class="control-label" for="statusText">Status text</label>
+            <input class="form-control" type="text" id="statusText" disabled>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="statusCode">Status code</label>
+            <input class="form-control" type="text" id="statusCode" disabled>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="responseHeaders">Response headers</label>
+            <pre id="responseHeaders">
+            </pre>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="responseData">Data</label>
+            <pre id="responseData">
+            </pre>
+        </div>
     </div>
 </div>
 {% endblock %}
