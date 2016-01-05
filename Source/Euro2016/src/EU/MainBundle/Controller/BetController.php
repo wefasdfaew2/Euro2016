@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use EU\MainBundle\Entity\Bet;
 use EU\MainBundle\Form\BetType;
+use EU\MainBundle\Form\BetEditType;
 use EU\MainBundle\Entity\ResponseHelper;
 
 class BetController extends Controller
@@ -33,14 +34,21 @@ class BetController extends Controller
         $form->submit($request);
         if($form->isValid())
         {
-            $em->persist($bet);
-            $em->flush();
-            $response->setStatusCode(Response::HTTP_CREATED);
-            $response->addHeader('Location', $this->generateUrl('eu_bet_read', array('id' => $bet->getId()), true));
+            if($bet->getGame()->hasStarted())
+            {
+                $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+            else
+            {
+                $em->persist($bet);
+                $em->flush();
+                $response->setStatusCode(Response::HTTP_CREATED);
+                $response->addHeader('Location', $this->generateUrl('eu_bet_read', array('id' => $bet->getId()), true));
+            }
         }
         else
         {
-            $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR );
+            $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
         return $response->renderResponse();
     }
@@ -77,12 +85,11 @@ class BetController extends Controller
         $response = new ResponseHelper($this);
         if($bet)
         {
-            $form = $this->createForm(new BetType(), $bet);
+            $form = $this->createForm(new BetEditType(), $bet);
             $form->submit($request);
             if($form->isValid())
             {
                 $em->flush();
-                //TO-DO: PATCH request (Partial update)
                 $response->setStatusCode(Response::HTTP_NO_CONTENT);
             }
             else

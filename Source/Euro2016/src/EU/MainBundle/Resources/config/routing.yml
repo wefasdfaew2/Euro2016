@@ -4,6 +4,7 @@ eu_main_homepage:
 eu_main_tester:
     path: /test
     defaults: { _controller: EUMainBundle:Index:test}
+
 eu_bet_list:
     path: /bets
     defaults: { _controller: EUMainBundle:Bet:list}
@@ -30,11 +31,35 @@ eu_bet_delete:
     methods: [DELETE]
     requirements:
         id: "\d+"
+
 eu_game_list:
     path: /games
     defaults: { _controller: EUMainBundle:Game:list}
     methods: [GET]
+eu_game_read:
+    path: /games/{id}
+    defaults: { _controller: EUMainBundle:Game:read}
+    methods: [GET]
+    requirements:
+        id: "\d+"
+
 eu_pot_list:
     path: /pots
     defaults: { _controller: EUMainBundle:Pot:list}
     methods: [GET]
+
+eu_participation_list:
+    path: /participations
+    defaults: { _controller: EUMainBundle:Participation:list}
+    methods: [GET]
+
+eu_teams_list:
+    path: /teams
+    defaults: { _controller: EUMainBundle:Team:list}
+    methods: [GET]
+eu_teams_read:
+    path: /teams/{id}
+    defaults: { _controller: EUMainBundle:Team:read}
+    methods: [GET]
+    requirements:
+        id: "\d+"

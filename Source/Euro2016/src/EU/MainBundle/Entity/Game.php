@@ -209,4 +209,10 @@ class Game implements JsonSerializable
             'startTime'   => $this->startTime
         ];
     }
+
+    public function hasStarted()
+    {
+        $now = new \DateTime();
+        return $now > $this->getStartTime();
+    }
 }

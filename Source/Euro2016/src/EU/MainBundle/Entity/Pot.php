@@ -3,6 +3,7 @@
 namespace EU\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * Pot
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="EU\MainBundle\Entity\PotRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Pot
+class Pot implements JsonSerializable
 {
     /**
      * @var integer
@@ -160,5 +161,16 @@ class Pot
      public function updateCreatedAt()
      {
          $this->setCreatedAt(new \Datetime());
+     }
+
+     public function jsonSerialize()
+     {
+         return [
+             'id'           => $this->id,
+             'name'         => $this->name,
+             'amount'       => $this->amount,
+             'manager_id'   => $this->manager->getId(),
+             'createdAt'    => $this->createdAt
+         ];
      }
 }

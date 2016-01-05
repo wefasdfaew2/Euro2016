@@ -3,6 +3,7 @@
 namespace EU\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * Participation
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="EU\MainBundle\Entity\ParticipationRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Participation
+class Participation implements JsonSerializable
 {
     /**
      * @var integer
@@ -159,5 +160,16 @@ class Participation
      public function updateCreatedAt()
      {
          $this->setCreatedAt(new \Datetime());
+     }
+
+     public function jsonSerialize()
+     {
+         return [
+             'id'       => $this->id,
+             'createdAt'=> $this->createdAt,
+             'paidAt'   => $this->paidAt,
+             'user_id'  => $this->user->getId(),
+             'pot_id'   => $this->pot->getId()
+         ];
      }
 }
