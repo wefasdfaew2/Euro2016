@@ -12,11 +12,12 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li><a href="{{ path('eu_main_homepage') }}">Home</a></li>
+				<li><a href="{{ path('eu_main_rules') }}">Rules</a></li>
 				{% if is_granted("IS_AUTHENTICATED_ANONYMOUSLY") %}
-				<li><a href="{{ path('eu_pot_list') }}">Pots</a></li>
-				<li><a href="{{ path('eu_bet_list') }}">Bets</a></li>
-				<li><a href="{{ path('eu_game_list') }}">Games</a></li>
-				<li><a href="{{ path('eu_game_list') }}">Teams</a></li>
+				<li><a href="{{ path('pots_list') }}">Pots</a></li>
+				<li><a href="{{ path('bets_list') }}">Bets</a></li>
+				<li><a href="{{ path('games_list') }}">Games</a></li>
+				<li><a href="{{ path('teams_list') }}">Teams</a></li>
 				{% if is_granted("ROLE_ADMIN") %}
 				<li><a href="{{ path('sonata_admin_dashboard') }}">Admin</a></li>
 				<li><a href="{{ path('eu_main_tester') }}">Tester</a></li>

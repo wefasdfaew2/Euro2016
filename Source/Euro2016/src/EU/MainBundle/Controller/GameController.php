@@ -11,7 +11,6 @@ class GameController extends Controller
 
     public function listAction()
     {
-        $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
         $rep = $em->getRepository('EUMainBundle:Game');
         $games = $rep->findAll();
@@ -30,6 +29,31 @@ class GameController extends Controller
         {
             $response->setStatusCode(Response::HTTP_OK);
             $response->setData($game);
+        }
+        else
+        {
+            $response->setStatusCode(Response::HTTP_NOT_FOUND);
+            $response->setMessage('There is no game with this ID in the database');
+            $response->setMessageType('warning');
+            $response->addMessageButton('default', ($request->headers->get('referer') == '') ? $this->generateUrl('eu_main_homepage') : $request->headers->get('referer'), 'Back');
+            $response->addMessageButton('warning', $this->generateUrl('eu_main_homepage'), 'Home');
+        }
+        return $response->renderResponse();
+    }
+
+    public function listBetsAction($id)
+    {
+        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getManager();
+        $rep = $em->getRepository('EUMainBundle:Game');
+        $game = $rep->find($id);
+        $response = new ResponseHelper($this);
+        if($game)
+        {
+            $rep = $em->getRepository('EUMainBundle:Bet');
+            $bets = $rep->findBy(array('game' => $game));
+            $response->setStatusCode(Response::HTTP_OK);
+            $response->setData($bets);
         }
         else
         {

@@ -11,7 +11,6 @@ class ParticipationController extends Controller
 
     public function listAction()
     {
-        $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
         $rep = $em->getRepository('EUMainBundle:Participation');
         $participations = $rep->findBy(array('user' => $this->getUser()));

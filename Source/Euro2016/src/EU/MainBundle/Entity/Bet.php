@@ -267,6 +267,12 @@ class Bet implements JsonSerializable
           return $this->score1.' - '.$this->score2;
       }
 
+      public function updateBet(\EU\MainBundle\Entity\Bet $bet)
+      {
+          $this->score1 = $bet->getScore1();
+          $this->score2 = $bet->getScore2();
+      }
+
       public function __toString()
       {
           return '('.$this->getBetScores().') on '.$this->game;

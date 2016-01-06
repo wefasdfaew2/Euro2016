@@ -63,8 +63,7 @@ class FOSUBUserProvider extends BaseClass
             $user = $this->userManager->createUser();
             $user->$setter_id($username);
             $user->$setter_token($response->getAccessToken());
-            //I have set all requested data with the user's username
-            //modify here with relevant data
+            //Registrating data
             $user->setUsername($username);
             $user->setEmail($response->getEmail());
             $user->setFirstName($response->getFirstName());
@@ -73,6 +72,8 @@ class FOSUBUserProvider extends BaseClass
             $user->addRole('ROLE_USER');
             $user->setEnabled(true);
             $this->userManager->updateUser($user);
+            //Business logic data
+            
             return $user;
         }
         //if user exists - go with the HWIOAuth way
@@ -81,6 +82,7 @@ class FOSUBUserProvider extends BaseClass
         $setter = 'set' . ucfirst($serviceName) . 'AccessToken';
         //update access token
         $user->$setter($response->getAccessToken());
+        $this->userManager->updateUser($user);
         return $user;
     }
 }

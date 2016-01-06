@@ -14,7 +14,6 @@ class BetController extends Controller
 
     public function listAction()
     {
-        $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
         $rep = $em->getRepository('EUMainBundle:Bet');
         $bets = $rep->findBy(array('user' => $this->getUser()));
@@ -34,21 +33,35 @@ class BetController extends Controller
         $form->submit($request);
         if($form->isValid())
         {
+            $rep = $em->getRepository('EUMainBundle:Participation');
+            $participation = $rep->findOneBy(array('user' => $this->getUser(), 'pot' => $bet->getPot()));
+            $rep = $em->getRepository('EUMainBundle:Bet');
+            $sameBet = $rep->findOneBy(array('user' => $this->getUser(), 'game' => $bet->getGame(), 'pot' => $bet->getPot()));
             if($bet->getGame()->hasStarted())
             {
-                $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+                $response->setStatusCode(Response::HTTP_LOCKED);
+            }
+            elseif(!$participation->isPaid())
+            {
+                $response->setStatusCode(Response::HTTP_PAYMENT_REQUIRED);
+            }
+            elseif($sameBet !== null)
+            {
+                $sameBet->updateBet($bet);
+                $em->flush();
+                $response->setStatusCode(Response::HTTP_NO_CONTENT);
             }
             else
             {
                 $em->persist($bet);
                 $em->flush();
                 $response->setStatusCode(Response::HTTP_CREATED);
-                $response->addHeader('Location', $this->generateUrl('eu_bet_read', array('id' => $bet->getId()), true));
+                $response->addHeader('Location', $this->generateUrl('bets_read', array('id' => $bet->getId()), true));
             }
         }
         else
         {
-            $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+            $response->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         return $response->renderResponse();
     }
@@ -89,12 +102,25 @@ class BetController extends Controller
             $form->submit($request);
             if($form->isValid())
             {
-                $em->flush();
-                $response->setStatusCode(Response::HTTP_NO_CONTENT);
+                $rep = $em->getRepository('EUMainBundle:Participation');
+                $participation = $rep->findOneBy(array('user' => $this->getUser(), 'pot' => $bet->getPot()));
+                if($bet->getGame()->hasStarted())
+                {
+                    $response->setStatusCode(Response::HTTP_LOCKED);
+                }
+                elseif(!$participation->isPaid())
+                {
+                    $response->setStatusCode(Response::HTTP_PAYMENT_REQUIRED);
+                }
+                else
+                {
+                    $em->flush();
+                    $response->setStatusCode(Response::HTTP_NO_CONTENT);
+                }
             }
             else
             {
-                $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR );
+                $response->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
             }
         }
         else
@@ -117,9 +143,16 @@ class BetController extends Controller
         $response = new ResponseHelper($this);
         if($bet)
         {
-            $em->remove($bet);
-            $em->flush();
-            $response->setStatusCode(Response::HTTP_NO_CONTENT);
+            if($bet->getGame()->hasStarted())
+            {
+                $response->setStatusCode(Response::HTTP_LOCKED);
+            }
+            else
+            {
+                $em->remove($bet);
+                $em->flush();
+                $response->setStatusCode(Response::HTTP_NO_CONTENT);
+            }
         }
         else
         {

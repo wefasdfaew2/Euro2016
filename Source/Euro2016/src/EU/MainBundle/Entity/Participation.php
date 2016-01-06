@@ -162,6 +162,11 @@ class Participation implements JsonSerializable
          $this->setCreatedAt(new \Datetime());
      }
 
+     public function isPaid()
+     {
+         return $this->paidAt !== null;
+     }
+
      public function jsonSerialize()
      {
          return [

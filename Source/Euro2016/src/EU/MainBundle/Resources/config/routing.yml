@@ -1,65 +1,101 @@
 eu_main_homepage:
     path:     /
     defaults: { _controller: EUMainBundle:Index:index }
+eu_main_main_pot:
+    path:     /participate-main-pot
+    defaults: { _controller: EUMainBundle:Index:mainpot }
+eu_main_rules:
+    path:     /rules
+    defaults: { _controller: EUMainBundle:Index:rules }
 eu_main_tester:
-    path: /test
+    path:     /test
     defaults: { _controller: EUMainBundle:Index:test}
 
-eu_bet_list:
+bets_list:
     path: /bets
     defaults: { _controller: EUMainBundle:Bet:list}
     methods: [GET]
-eu_bet_create:
+bets_create:
     path:   /bets
     defaults: { _controller: EUMainBundle:Bet:create }
     methods: [POST]
-eu_bet_read:
+bets_read:
     path:   /bets/{id}
     defaults: { _controller: EUMainBundle:Bet:read }
     methods: [GET]
     requirements:
         id: "\d+"
-eu_bet_update:
+bets_update:
     path:   /bets/{id}
     defaults: { _controller: EUMainBundle:Bet:update }
     methods: [POST|PUT]
     requirements:
         id: "\d+"
-eu_bet_delete:
+bets_delete:
     path:   /bets/{id}
     defaults: { _controller: EUMainBundle:Bet:delete }
     methods: [DELETE]
     requirements:
         id: "\d+"
 
-eu_game_list:
+games_list:
     path: /games
     defaults: { _controller: EUMainBundle:Game:list}
     methods: [GET]
-eu_game_read:
+games_read:
     path: /games/{id}
     defaults: { _controller: EUMainBundle:Game:read}
     methods: [GET]
     requirements:
         id: "\d+"
+games_bets_list:
+    path: /games/{id}/bets
+    defaults: { _controller: EUMainBundle:Game:listBets}
+    methods: [GET]
+    requirements:
+        id: "\d+"
 
-eu_pot_list:
+pots_list:
     path: /pots
     defaults: { _controller: EUMainBundle:Pot:list}
     methods: [GET]
+pots_read:
+    path: /pots/{id}
+    defaults: { _controller: EUMainBundle:Pot:read}
+    methods: [GET]
+    requirements:
+        id: "\d+"
+pots_users_list:
+    path: /pots/{id}/users
+    defaults: { _controller: EUMainBundle:Pot:listUsers}
+    methods: [GET]
+    requirements:
+        id: "\d+"
+pots_bets_list:
+    path: /pots/{id}/bets
+    defaults: { _controller: EUMainBundle:Pot:listBets}
+    methods: [GET]
+    requirements:
+        id: "\d+"
 
-eu_participation_list:
+participations_list:
     path: /participations
     defaults: { _controller: EUMainBundle:Participation:list}
     methods: [GET]
 
-eu_teams_list:
+teams_list:
     path: /teams
     defaults: { _controller: EUMainBundle:Team:list}
     methods: [GET]
-eu_teams_read:
+teams_read:
     path: /teams/{id}
     defaults: { _controller: EUMainBundle:Team:read}
+    methods: [GET]
+    requirements:
+        id: "\d+"
+teams_games_read:
+    path: /teams/{id}/games
+    defaults: { _controller: EUMainBundle:Team:listGames}
     methods: [GET]
     requirements:
         id: "\d+"
