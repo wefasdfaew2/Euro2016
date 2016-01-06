@@ -1,4 +1,3 @@
-Euro2016
+Euro 2016
 ========
-
-A Symfony project created on September 6, 2015, 6:21 pm.
+This project is all about betting on the Euro 2016 soccer tournament.
