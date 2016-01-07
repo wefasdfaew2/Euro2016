@@ -39,6 +39,7 @@ twig:
     form:
         resources:
             - BraincraftedBootstrapBundle:Form:bootstrap.html.twig
+            - SonataCoreBundle:Form:datepicker.html.twig
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
