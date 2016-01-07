@@ -8,7 +8,14 @@ class MenuController extends Controller
 {
     public function getMenuAction()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_ANONYMOUSLY'))
+        {
+            $user = $this->getUser();
+        }
+        else
+        {
+            $user = null;
+        }
         return $this->render('EUMenuBundle:Menu:menu.html.twig', array('user' => $user));
     }
 }

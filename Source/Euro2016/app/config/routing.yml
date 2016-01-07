@@ -20,6 +20,10 @@ eu_main:
     resource: "@EUMainBundle/Resources/config/routing.yml"
     prefix:   /
 
+eu_users:
+    resource: "@ApplicationSonataUserBundle/Resources/config/routing/routing.yml"
+    prefix:   /
+
 eu_menu:
     resource: "@EUMenuBundle/Resources/config/routing.yml"
     prefix:   /
