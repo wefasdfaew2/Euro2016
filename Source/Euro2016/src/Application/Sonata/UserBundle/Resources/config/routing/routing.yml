@@ -1,0 +1,4 @@
+eu_user_list:
+    path: /users
+    defaults: {_controller:ApplicationSonataUserBundle:User:list}
+    methods: [GET]
