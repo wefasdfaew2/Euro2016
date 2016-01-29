@@ -40,62 +40,109 @@ bets_delete:
 
 games_list:
     path: /games
-    defaults: { _controller: EUMainBundle:Game:list}
+    defaults: { _controller: EUMainBundle:Game:list }
     methods: [GET]
 games_read:
     path: /games/{id}
-    defaults: { _controller: EUMainBundle:Game:read}
+    defaults: { _controller: EUMainBundle:Game:read }
     methods: [GET]
     requirements:
         id: "\d+"
 games_bets_list:
     path: /games/{id}/bets
-    defaults: { _controller: EUMainBundle:Game:listBets}
+    defaults: { _controller: EUMainBundle:Game:listBets }
     methods: [GET]
     requirements:
         id: "\d+"
 
 pots_list:
     path: /pots
-    defaults: { _controller: EUMainBundle:Pot:list}
+    defaults: { _controller: EUMainBundle:Pot:list }
     methods: [GET]
+pots_create:
+    path:   /pots
+    defaults: { _controller: EUMainBundle:Pot:create }
+    methods: [POST]
 pots_read:
     path: /pots/{id}
-    defaults: { _controller: EUMainBundle:Pot:read}
+    defaults: { _controller: EUMainBundle:Pot:read }
     methods: [GET]
     requirements:
         id: "\d+"
+pots_update:
+    path: /pots/{id}
+    defaults: { _controller: EUMainBundle:Pot:update }
+    methods: [POST|PUT]
+    requirements:
+        id: "\d+"
+pots_delete:
+    path: /pots/{id}
+    defaults: { _controller: EUMainBundle:Pot:delete }
+    methods: [DELETE]
+    requirements:
+        id: "\d+"
+pots_invite:
+    path: /pots/{id}/invite/{iduser}
+    defaults: { _controller: EUMainBundle:Pot:invite }
+    methods: [GET]
+    requirements:
+        id: "\d+"
+        iduser: "\d+"
 pots_users_list:
     path: /pots/{id}/users
-    defaults: { _controller: EUMainBundle:Pot:listUsers}
+    defaults: { _controller: EUMainBundle:Pot:listUsers }
     methods: [GET]
     requirements:
         id: "\d+"
 pots_bets_list:
     path: /pots/{id}/bets
-    defaults: { _controller: EUMainBundle:Pot:listBets}
+    defaults: { _controller: EUMainBundle:Pot:listBets }
+    methods: [GET]
+    requirements:
+        id: "\d+"
+pots_participations_list:
+    path: /pots/{id}/participations
+    defaults: { _controller: EUMainBundle:Pot:listParticipations }
     methods: [GET]
     requirements:
         id: "\d+"
 
 participations_list:
     path: /participations
-    defaults: { _controller: EUMainBundle:Participation:list}
+    defaults: { _controller: EUMainBundle:Participation:list }
     methods: [GET]
+participations_accept:
+    path: /participations/{id}/accept
+    defaults: { _controller: EUMainBundle:Participation:accept }
+    methods: [GET]
+    requirements:
+        id: "\d+"
+participations_pay:
+    path: /participations/{id}/paid
+    defaults: { _controller: EUMainBundle:Participation:paid }
+    methods: [GET]
+    requirements:
+        id: "\d+"
+participations_delete:
+    path: /participations/{id}
+    defaults: { _controller: EUMainBundle:Participation:delete }
+    methods: [DELETE]
+    requirements:
+        id: "\d+"
 
 teams_list:
     path: /teams
-    defaults: { _controller: EUMainBundle:Team:list}
+    defaults: { _controller: EUMainBundle:Team:list }
     methods: [GET]
 teams_read:
     path: /teams/{id}
-    defaults: { _controller: EUMainBundle:Team:read}
+    defaults: { _controller: EUMainBundle:Team:read }
     methods: [GET]
     requirements:
         id: "\d+"
 teams_games_read:
     path: /teams/{id}/games
-    defaults: { _controller: EUMainBundle:Team:listGames}
+    defaults: { _controller: EUMainBundle:Team:listGames }
     methods: [GET]
     requirements:
         id: "\d+"

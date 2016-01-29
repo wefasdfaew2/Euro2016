@@ -183,7 +183,7 @@ class Game implements JsonSerializable
 
     public function getStartTimeFormatted()
     {
-        return date_format($this->startTime, 'j/n/y H:i');
+        return date_format($this->startTime, 'M j');
     }
 
     public function __toString()
@@ -194,7 +194,7 @@ class Game implements JsonSerializable
         }
         else
         {
-            return $this->team1->getShortName().'-'.$this->team2->getShortName().' at '.$this->getStartTimeFormatted();
+            return $this->team1->getShortName().' - '.$this->team2->getShortName();
         }
     }
 
@@ -202,8 +202,8 @@ class Game implements JsonSerializable
     {
         return [
             'id'          => $this->id,
-            'team1_id'    => $this->team1->getId(),
-            'team2_id'    => $this->team2->getId(),
+            'team1'       => $this->team1->jsonSerialize(),
+            'team2'       => $this->team2->jsonSerialize(),
             'score1'      => $this->score1,
             'score2'      => $this->score2,
             'startTime'   => $this->startTime
