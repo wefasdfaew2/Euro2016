@@ -169,7 +169,7 @@ class Pot implements JsonSerializable
              'id'           => $this->id,
              'name'         => $this->name,
              'amount'       => $this->amount,
-             'manager_id'   => $this->manager->getId(),
+             'manager'      => $this->manager->jsonSerialize(),
              'createdAt'    => $this->createdAt
          ];
      }

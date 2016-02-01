@@ -282,9 +282,9 @@ class Bet implements JsonSerializable
       {
           return [
               'id'          => $this->id,
-              'user_id'     => $this->user->getId(),
-              'game_id'     => $this->game->getId(),
-              'pot_id'      => $this->pot->getId(),
+              'user'        => $this->user->jsonSerialize(),
+              'game'        => $this->game->jsonSerialize(),
+              'pot'         => $this->pot->jsonSerialize(),
               'score1'      => $this->score1,
               'score2'      => $this->score2,
               'createdAt'   => $this->createdAt,

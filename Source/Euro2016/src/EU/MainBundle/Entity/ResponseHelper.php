@@ -4,6 +4,7 @@ namespace EU\MainBundle\Entity;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use EU\MainBundle\Entity\ResponseHelperControllerInterface;
 
 class ResponseHelper
 {
@@ -16,7 +17,7 @@ class ResponseHelper
     private $messageType;
     private $messageButtons;
 
-    public function __construct(Controller $controller, $statusCode = 200, $data = null, $headers = array())
+    public function __construct(ResponseHelperControllerInterface $controller, $statusCode = 200, $data = null, $headers = array())
     {
         $this->controller = $controller;
         $this->statusCode = $statusCode;
@@ -45,7 +46,9 @@ class ResponseHelper
             }
             else
             {
-                //TO-DO
+                return $this->controller->render($this->controller->getDefaultTemplate(), array(
+                    'data' => $this->getData()
+                ));
             }
         }
     }

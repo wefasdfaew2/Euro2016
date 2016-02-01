@@ -33,6 +33,13 @@ class Participation implements JsonSerializable
     /**
      * @var \DateTime
      *
+     * @ORM\Column(name="acceptedAt", type="datetime", nullable=true)
+     */
+    private $acceptedAt;
+
+    /**
+     * @var \DateTime
+     *
      * @ORM\Column(name="paidAt", type="datetime", nullable=true)
      */
     private $paidAt;
@@ -170,11 +177,35 @@ class Participation implements JsonSerializable
      public function jsonSerialize()
      {
          return [
-             'id'       => $this->id,
-             'createdAt'=> $this->createdAt,
-             'paidAt'   => $this->paidAt,
-             'user_id'  => $this->user->getId(),
-             'pot_id'   => $this->pot->getId()
+             'id'           => $this->id,
+             'createdAt'    => $this->createdAt,
+             'acceptedAt'   => $this->acceptedAt,
+             'paidAt'       => $this->paidAt,
+             'user'         => $this->user->jsonSerialize(),
+             'pot'          => $this->pot->jsonSerialize()
          ];
      }
+
+    /**
+     * Set acceptedAt
+     *
+     * @param \DateTime $acceptedAt
+     * @return Participation
+     */
+    public function setAcceptedAt($acceptedAt)
+    {
+        $this->acceptedAt = $acceptedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get acceptedAt
+     *
+     * @return \DateTime
+     */
+    public function getAcceptedAt()
+    {
+        return $this->acceptedAt;
+    }
 }

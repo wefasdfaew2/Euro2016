@@ -8,9 +8,15 @@ use EU\MainBundle\Entity\Bet;
 use EU\MainBundle\Form\BetType;
 use EU\MainBundle\Form\BetEditType;
 use EU\MainBundle\Entity\ResponseHelper;
+use EU\MainBundle\Entity\ResponseHelperControllerInterface;
 
-class BetController extends Controller
+class BetController extends Controller implements ResponseHelperControllerInterface
 {
+
+    public function getDefaultTemplate()
+    {
+        return 'EUMainBundle:Bet:index.html.twig';
+    }
 
     public function listAction()
     {
@@ -37,7 +43,15 @@ class BetController extends Controller
             $participation = $rep->findOneBy(array('user' => $this->getUser(), 'pot' => $bet->getPot()));
             $rep = $em->getRepository('EUMainBundle:Bet');
             $sameBet = $rep->findOneBy(array('user' => $this->getUser(), 'game' => $bet->getGame(), 'pot' => $bet->getPot()));
-            if($bet->getGame()->hasStarted())
+            if(!$bet->getGame())
+            {
+                $response->setStatusCode(Response::HTTP_NOT_FOUND);
+            }
+            elseif(!$participation)
+            {
+                $response->setStatusCode(Response::HTTP_NOT_FOUND);
+            }
+            elseif($bet->getGame()->hasStarted())
             {
                 $response->setStatusCode(Response::HTTP_LOCKED);
             }
