@@ -36,6 +36,7 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    cache: false
     form:
         resources:
             - BraincraftedBootstrapBundle:Form:bootstrap.html.twig
