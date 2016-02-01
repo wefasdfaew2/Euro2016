@@ -50,11 +50,11 @@ class AppKernel extends Kernel
 
     public function getCacheDir()
     {
-        return 'gs://#default#/symfony/cache';
+        return 'gs://euro2016-1163.appspot.com/symfony/cache';
     }
 
     public function getLogDir()
     {
-        return 'gs://#default#/symfony/log';
+        return 'gs://euro2016-1163.appspot.com/symfony/log';
     }
 }
