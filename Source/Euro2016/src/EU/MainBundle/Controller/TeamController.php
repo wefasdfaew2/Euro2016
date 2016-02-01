@@ -5,9 +5,15 @@ namespace EU\MainBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use EU\MainBundle\Entity\ResponseHelper;
+use EU\MainBundle\Entity\ResponseHelperControllerInterface;
 
-class TeamController extends Controller
+class TeamController extends Controller implements ResponseHelperControllerInterface
 {
+
+    public function getDefaultTemplate()
+    {
+        return 'EUMainBundle:Team:index.html.twig';
+    }
 
     public function listAction()
     {

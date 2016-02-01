@@ -8,9 +8,17 @@ use EU\MainBundle\Entity\Game;
 use EU\MainBundle\Entity\Team;
 use EU\MainBundle\Entity\Pot;
 use EU\MainBundle\Entity\Participation;
+use EU\MainBundle\Entity\ResponseHelperControllerInterface;
 
-class IndexController extends Controller
+
+class IndexController extends Controller implements ResponseHelperControllerInterface
 {
+
+    public function getDefaultTemplate()
+    {
+        return 'EUMainBundle:Index:index.html';
+    }
+
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -36,7 +44,7 @@ class IndexController extends Controller
             $list = '';
             foreach($unpaidParticipations as $p)
             {
-                $list = $list.'<li>'.$p->getPot()->getName().': '.$p->getPot()->getAmount().'&euro;</li>';
+                $list = $list.'<li><a href="pots/'.$p->getPot()->getId().'">'.$p->getPot()->getName().'</a>: '.$p->getPot()->getAmount().'&euro;</li>';
             }
             $this->get('session')->getFlashBag()->add(
                 'info',
@@ -45,7 +53,17 @@ class IndexController extends Controller
                 Please contact the pot manager if you have already done so.'
             );
         }
-        return $this->render('EUMainBundle:Index:index.html.twig');
+        $rep = $em->getRepository('EUMainBundle:Bet');
+        $bets = $rep->findAll();
+        $rep = $em->getRepository('EUMainBundle:Game');
+        $games = $rep->findAll();
+        $rep = $em->getRepository('ApplicationSonataUserBundle:User');
+        $users = $rep->findAll();
+        return $this->render('EUMainBundle:Index:index.html.twig', array(
+            'bets'  => $bets,
+            'games' => $games,
+            'users' => $users
+        ));
     }
 
     public function mainpotAction()
@@ -57,9 +75,10 @@ class IndexController extends Controller
         $participation = new Participation();
         $participation->setUser($user);
         $participation->setPot($mainPot);
+        $participation->setAcceptedAt(new \DateTime());
         $em->persist($participation);
         $em->flush();
-        return $this->redirectToRoute('eu_main_homepage');
+        return $this->redirectToRoute('pots_list');
     }
 
     public function rulesAction()

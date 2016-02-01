@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Euro 2016{% endblock %}</title>
     {% block javascripts %}
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
+<!--    <script src="https://code.jquery.com/jquery.js"></script> -->
     <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
     {% endblock %}
     {% block stylesheets %}
     {% stylesheets filter='cssrewrite'
@@ -21,9 +21,7 @@
   </head>
 
 <body>
-	<div>
 	{{ render(controller("EUMenuBundle:Menu:getMenu")) }}
-	</div>
 	<div class="container" id="sitecontainer">
 		{% for key, messages in app.session.flashbag.all() %}
 			{% for message in messages %}

@@ -7,8 +7,6 @@
 {% block content %}
 <style>
 #form {
-    //margin-bottom: 25px;
-    //max-width: 500px;
 }
 #error-box {
     margin-top: 10px;
@@ -101,10 +99,9 @@ function beforeSendAjax()
 <div class="page-header">
     <h1>Tester</h1>
 </div>
-<div class="container">
 <div class="row">
     <div id="form" class="col-sm-6">
-        <h3>Form</h2>
+        <h3>Request</h2>
         <div class="form-group">
             <label class="control-label" for="actionUrl">Action URL</label>
             <input type="text" name="actionUrl" class="form-control" id="actionUrl" placeholder="bets/1" value="bets">
@@ -146,6 +143,5 @@ function beforeSendAjax()
             </pre>
         </div>
     </div>
-</div>
 </div>
 {% endblock %}

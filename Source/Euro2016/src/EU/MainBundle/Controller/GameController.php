@@ -5,9 +5,15 @@ namespace EU\MainBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use EU\MainBundle\Entity\ResponseHelper;
+use EU\MainBundle\Entity\ResponseHelperControllerInterface;
 
-class GameController extends Controller
+class GameController extends Controller implements ResponseHelperControllerInterface
 {
+
+    public function getDefaultTemplate()
+    {
+        return 'EUMainBundle:Gamr:index.html.twig';
+    }
 
     public function listAction()
     {
