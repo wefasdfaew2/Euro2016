@@ -47,4 +47,14 @@ class AppKernel extends Kernel
     {
         $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
     }
+
+    public function getCacheDir()
+    {
+        return 'gs://euro2016-1163.appspot.com/symfony/cache';
+    }
+
+    public function getLogDir()
+    {
+        return 'gs://euro2016-1163.appspot.com/symfony/log';
+    }
 }
