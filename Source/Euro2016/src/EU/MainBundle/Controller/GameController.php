@@ -12,7 +12,7 @@ class GameController extends Controller implements ResponseHelperControllerInter
 
     public function getDefaultTemplate()
     {
-        return 'EUMainBundle:Gamr:index.html.twig';
+        return 'EUMainBundle:Game:index.html.twig';
     }
 
     public function listAction()
