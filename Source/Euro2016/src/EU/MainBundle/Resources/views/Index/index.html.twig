@@ -54,7 +54,7 @@
             {% for bet in bets %}
             <div class="feed-item">
                 <div class="date">{{ bet.updatedAt | date('M j G:i') }}</div>
-                <div class="text"><a href="users/{{ bet.user.id }}">{{ bet.user }}</a> {{ bet.updatedAt == bet.createdAt ? 'added a' : 'updated his' }} bet on <a href="games/{{ bet.game.id }}">{{ bet.game }}</a></div>
+                <div class="text"><a href="users/{{ bet.user.id }}">{{ bet.user }}</a> {{ bet.updatedAt == bet.createdAt ? 'added a' : 'updated his' }} bet on <a href="games/{{ bet.game.id }}">{{ bet.game }}</a> in <a href="pots/{{ bet.pot.id }}">{{ bet.pot.name }}</a></div>
             </div>
             {% endfor %}
         </div>

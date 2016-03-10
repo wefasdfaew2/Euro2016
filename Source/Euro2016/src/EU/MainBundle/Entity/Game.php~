@@ -3,6 +3,7 @@
 namespace EU\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * Game
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="EU\MainBundle\Entity\GameRepository")
  */
-class Game
+class Game implements JsonSerializable
 {
     /**
      * @var integer
@@ -24,14 +25,14 @@ class Game
     /**
      * @var integer
      *
-     * @ORM\Column(name="score1", type="integer")
+     * @ORM\Column(name="score1", type="integer", nullable=true)
      */
     private $score1;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="score2", type="integer")
+     * @ORM\Column(name="score2", type="integer", nullable=true)
      */
     private $score2;
 
@@ -41,6 +42,13 @@ class Game
      * @ORM\Column(name="startTime", type="datetime")
      */
     private $startTime;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pool", type="string", length=255)
+     */
+    private $pool;
 
     /**
      * @ORM\ManyToOne(targetEntity="EU\MainBundle\Entity\Team")
@@ -132,5 +140,86 @@ class Game
     public function getStartTime()
     {
         return $this->startTime;
+    }
+
+    /**
+     * Set team1
+     *
+     * @param \EU\MainBundle\Entity\Team $team1
+     * @return Game
+     */
+    public function setTeam1(\EU\MainBundle\Entity\Team $team1)
+    {
+        $this->team1 = $team1;
+
+        return $this;
+    }
+
+    /**
+     * Get team1
+     *
+     * @return \EU\MainBundle\Entity\Team
+     */
+    public function getTeam1()
+    {
+        return $this->team1;
+    }
+
+    /**
+     * Set team2
+     *
+     * @param \EU\MainBundle\Entity\Team $team2
+     * @return Game
+     */
+    public function setTeam2(\EU\MainBundle\Entity\Team $team2)
+    {
+        $this->team2 = $team2;
+
+        return $this;
+    }
+
+    /**
+     * Get team2
+     *
+     * @return \EU\MainBundle\Entity\Team
+     */
+    public function getTeam2()
+    {
+        return $this->team2;
+    }
+
+    public function getStartTimeFormatted()
+    {
+        return date_format($this->startTime, 'M j');
+    }
+
+    public function __toString()
+    {
+        if($this->id === null)
+        {
+            return 'New game';
+        }
+        else
+        {
+            return $this->team1->getShortName().' - '.$this->team2->getShortName();
+        }
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id'          => $this->id,
+            'team1'       => $this->team1->jsonSerialize(),
+            'team2'       => $this->team2->jsonSerialize(),
+            'score1'      => $this->score1,
+            'score2'      => $this->score2,
+            'startTime'   => $this->startTime
+        ];
+    }
+
+    public function hasStarted()
+    {
+        $now = new \DateTime();
+        return $now > $this->getStartTime();
     }
 }

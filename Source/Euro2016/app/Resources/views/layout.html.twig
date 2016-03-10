@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="euro2016App">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Euro 2016{% endblock %}</title>
     {% block javascripts %}
-<!--    <script src="https://code.jquery.com/jquery.js"></script> -->
     <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/angular.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/angular-resource.js') }}"></script>
     {% endblock %}
     {% block stylesheets %}
     {% stylesheets filter='cssrewrite'
     'css/bootstrap.css' %}
     <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
     {% endstylesheets %}
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('css/global.css') }}" type="text/css" />
     {% endblock %}
     {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
@@ -38,5 +39,6 @@
 			<p>Euro 2016 © 2016</p>
 		</footer>
     </div>
+    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
