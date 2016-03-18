@@ -32,6 +32,11 @@ var euro2016App = angular.module('euro2016App', dependencies).config(function($i
     };
 }).filter('dateToISO', function (){
     return function (input){
-        return new Date(input).toISOString();
+        if(typeof input == "string"){
+            var t = input.split(/[- :]/);
+            return new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]).toISOString();
+        } else {
+            return new Date(input).toISOString();
+        }
     };
 });
