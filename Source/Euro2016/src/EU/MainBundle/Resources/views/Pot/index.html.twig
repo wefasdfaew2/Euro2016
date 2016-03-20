@@ -1,0 +1,171 @@
+{% extends "EUMainBundle::layout.html.twig" %}
+
+{% block title %}
+  Pot - {{ parent() }}
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <button class="btn btn-lg btn-success pull-right" data-toggle="modal" data-target="#newPotModal">Create your own pot</button>
+    <h1>Your Participations</h1>
+</div>
+<!-- Modal -->
+
+<div class="modal fade" id="newPotModal" tabindex="-1" role="dialog" aria-labelledby="newPotModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="newPotModalLabel">Create a new pot</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label" for="name">Name of pot</label>
+                    <input type="text" name="name" class="form-control" id="name" placeholder="My super pot">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="amount">Participation amount</label>
+                    <div class="input-group">
+                        <span class="input-group-addon">&euro;</span>
+                        <input type="number" name="amount" class="form-control" id="amount" placeholder="Amount per person">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success"><img src="{{ asset('img/loader.gif') }}"/> Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.modal .btn-success img {
+    width: 24px;
+}
+</style>
+
+<script type="text/javascript">
+$(document).ready(function ()
+{
+    $('.modal .btn-success img').hide();
+    $('.modal .btn-success').click(function ()
+    {
+        saveNewPot();
+    });
+});
+function saveNewPot()
+{
+    if(!checkNewPot())
+    {
+        return;
+    }
+    var settings = {
+        url: '{{ path('pots_create') }}',
+        method: 'POST',
+        data:
+        {
+            name: $('#name').val(),
+            amount: $('#amount').val()
+        },
+        beforeSend: function ()
+        {
+            $('.modal .btn-success img').show();
+            $('.modal-body .alert').remove();
+            $('.modal .btn-success').addClass('disabled');
+        }
+    };
+    $.ajax(settings).done(function(data, textStatus, jqXHR)
+    {
+        $('.modal .btn-success img').hide();
+        window.location = jqXHR.getResponseHeader('location');
+    })
+    .fail(function(jqXHR, textStatus, errorThrown)
+    {
+        $('.modal .btn-success img').hide();
+        $('.modal .btn-success').removeClass('disabled');
+        $('.modal .modal-body').prepend('<div class="alert alert-danger">There has been an error with the request. Please try again</div>');
+    });
+}
+function checkNewPot()
+{
+    $('#name').parent().removeClass('has-error');
+    $('#amount').parent().removeClass('has-error');
+    var check = true;
+    if($('#name').val() == '')
+    {
+        $('#name').parent().addClass('has-error');
+        check = false;
+    }
+    if($('#name').val().length <= 3)
+    {
+        $('#name').parent().addClass('has-error');
+        check = false;
+    }
+    if($('#amount').val() == '')
+    {
+        $('#amount').parent().addClass('has-error');
+        check = false;
+    }
+    /*if(!is_num($('#amount').val()))
+    {
+        $('#amount').parent().addClass('has-error');
+        check = false;
+    }*/
+    if($('#amount').val() < 5)
+    {
+        $('#amount').parent().addClass('has-error');
+        check = false;
+    }
+    return check;
+}
+</script>
+<!-- End Modal -->
+
+
+<div class="row" id="potList">
+    <div class="loader" class="col-sm-12">
+        <img src="{{ asset('img/loader.gif') }}"/>
+    </div>
+</div>
+
+<style>
+#potList .loader img {
+    width: 100px;
+    margin: auto;
+}
+</style>
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+    loadPots();
+});
+
+function loadPots()
+{
+    var settings = {
+        url: '{{ path('participations_list') }}',
+        method: 'GET'
+    };
+    $.ajax(settings).done(function(data, textStatus, jqXHR)
+    {
+        handleAjaxResponse(data, textStatus, jqXHR);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown)
+    {
+        $('#potList').empty();
+        $('#potList').append('<div class="col-sm-12"><div class="alert alert-danger">There has been an error with the request. <button class="btn btn-primary" onClick="loadPots()">Try again</button></div></div>');
+    });
+}
+
+function handleAjaxResponse(data, textStatus, jqXHR)
+{
+    $('#potList').empty();
+    for (participation of data)
+    {
+        $('#potList').append('<div class="col-sm-3"><div class="thumbnail"><div class="caption"><h3>' + participation.pot.name + '</h3><p><a class="btn btn-primary" href="#">Go to pot</a></p></div></div></div>');
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,6 @@
+runtime: php55
+api_version: 1
+
+handlers:
+- url: /.*
+  script: /Source/Euro2016/web/app_dev.php

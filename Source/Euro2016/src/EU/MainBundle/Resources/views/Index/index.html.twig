@@ -1,0 +1,93 @@
+{% extends "EUMainBundle::layout.html.twig" %}
+
+{% block title %}
+  Home - {{ parent() }}
+{% endblock %}
+
+{% block content %}
+<style>
+/* apply a natural box layout model to all elements, but allowing components to change */
+.activity-feed {
+  padding: 15px;
+}
+.activity-feed .feed-item {
+  position: relative;
+  padding-bottom: 20px;
+  padding-left: 30px;
+  border-left: 2px solid #e4e8eb;
+}
+.activity-feed .feed-item:last-child {
+  border-color: transparent;
+}
+.activity-feed .feed-item:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: -6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid #f37167;
+}
+.activity-feed .feed-item .date {
+  position: relative;
+  top: -5px;
+  color: #8c96a3;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+.activity-feed .feed-item .text {
+  position: relative;
+  top: -3px;
+}
+
+</style>
+<div class="page-header">
+    <h1>Home</h1>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <h3>Activity Feed</h3>
+        <div class="activity-feed">
+            {% for bet in bets %}
+            <div class="feed-item">
+                <div class="date">{{ bet.updatedAt | date('M j G:i') }}</div>
+                <div class="text"><a href="users/{{ bet.user.id }}">{{ bet.user }}</a> {{ bet.updatedAt == bet.createdAt ? 'added a' : 'updated his' }} bet on <a href="games/{{ bet.game.id }}">{{ bet.game }}</a> in <a href="pots/{{ bet.pot.id }}">{{ bet.pot.name }}</a></div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <h3>Upcoming Games</h3>
+        <table class="table table-condensed table-striped">
+            <tr>
+                <th>Game</th>
+                <th></th>
+            </tr>
+            {% for game in games %}
+            <tr>
+                <td>{{ game }}</td>
+                <td><a href="#" class="btn btn-xs btn-primary">Bet Now!</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <h3>Leaderboard</h3>
+        <table class="table table-condensed table-striped">
+            <tr>
+                <th>User</th>
+                <th>Points</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td>{{ user }}</td>
+                <td>4pts</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
