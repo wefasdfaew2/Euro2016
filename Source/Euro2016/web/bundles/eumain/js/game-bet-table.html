@@ -1,16 +1,16 @@
 <td>[[participation.pot.name]]</td>
-<td>[[bet.score1 + "-" + bet.score2]]</td>
+<td>[[bet ? (bet.score1 + "-" + bet.score2) : ("none")]]</td>
 <td>
-    <div class="btn-group">
+    <a ng-hide="bet" class="btn btn-primary btn-xs create-bet" href="#">Bet now!</a>
+    <div ng-show="bet" class="btn-group">
         <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
         <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>
         </button>
         <ul class="dropdown-menu">
-            <li ng-hide="bet"><a class="create-bet" href="#">Create</a></li>
-            <li ng-show="bet"><a class="edit-bet" href="#">Edit</a></li>
-            <li ng-show="bet"><a class="delete-bet" href="#">Delete</a></li>
+            <li><a class="edit-bet" href="#">Edit</a></li>
+            <li><a class="delete-bet" href="#">Delete</a></li>
         </ul>
     </div>
 </td>
