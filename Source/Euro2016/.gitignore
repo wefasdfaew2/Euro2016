@@ -8,6 +8,4 @@
 /bin/
 /composer.phar
 /vendor/
-web/bundles/*
-!web/bundles/eumain/*
 /.ftpconfig

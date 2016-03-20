@@ -1,0 +1,25 @@
+<div class="col-sm-3" style="padding: 10px;">
+    <div class="game panel panel-default">
+        <div class="panel-heading">
+            [[ game.startTime.date | dateToISO | date: 'MMMM d @ H:mm' ]] <span class="pull-right label label-primary">[[ game.pool ]]</span>
+        </div>
+        <div class="panel-body">
+            <div class="flags">
+                <img ng-src="[['../img/flags/normal/' + (game.team1.shortName | uppercase) + '.png']]"/>
+                <strong>vs</strong>
+                <img ng-src="[['../img/flags/normal/' + (game.team2.shortName | uppercase) + '.png']]"/>
+            </div>
+            <div class="names">
+                [[game.team1.longName]] vs [[game.team2.longName]]
+            </div>
+        </div>
+        <table class="table table-condensed table-striped">
+            <tr>
+                <th>Pots</th>
+                <th>Bets</th>
+                <th></th>
+            </tr>
+            <tr game-bet-table ng-repeat="participation in participations" participation="participation" game="game"></tr>
+        </table>
+    </div>
+</div>
