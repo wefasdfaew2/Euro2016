@@ -140,7 +140,7 @@ teams_read:
     methods: [GET]
     requirements:
         id: "\d+"
-teams_games_read:
+teams_games_list:
     path: /teams/{id}/games
     defaults: { _controller: EUMainBundle:Team:listGames }
     methods: [GET]
