@@ -1,4 +1,0 @@
-services:
-#    gp_main.example:
-#        class: GP\MainBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
