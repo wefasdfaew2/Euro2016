@@ -17,16 +17,26 @@ var euro2016App = angular.module('euro2016App', dependencies).config(function($i
     $interpolateProvider.startSymbol("[[").endSymbol("]]");
 }).config(function($httpProvider){
     $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    $httpProvider.defaults.headers.post  = {'Content-Type': 'application/x-www-form-urlencoded'};
+    $httpProvider.defaults.transformRequest = function (data) {
+        if (data === undefined)
+            return data;
+        var clonedData = $.extend(true, {}, data);
+        for (var property in clonedData)
+            if (property.substr(0, 1) == '$')
+                delete clonedData[property];
+        return $.param(clonedData);
+    };
 }).config(function($httpProvider) {
     $httpProvider.interceptors.push('myHttpInterceptor');
 }).factory('myHttpInterceptor', function ($q) {
     return {
         'request': function (config){
-            $('#loader-ajax').show();
+            $('.loader-ajax').show();
             return config;
         },
         'response': function (config){
-            $('#loader-ajax').hide();
+            $('.loader-ajax').hide();
             return config;
         }
     };

@@ -64,12 +64,12 @@
         <table class="table table-condensed table-striped">
             <tr>
                 <th>Game</th>
-                <th></th>
+                <th>Time</th>
             </tr>
-            {% for game in games %}
+            {% for game in games|slice(0,5) %}
             <tr>
                 <td>{{ game }}</td>
-                <td><a href="#" class="btn btn-xs btn-primary">Bet Now!</td>
+                <td>{{ game.startTime | date('M j @ G:i') }}</td>
             </tr>
             {% endfor %}
         </table>
@@ -81,7 +81,7 @@
                 <th>User</th>
                 <th>Points</th>
             </tr>
-            {% for user in users %}
+            {% for user in users|slice(0,5) %}
             <tr>
                 <td>{{ user }}</td>
                 <td>4pts</td>

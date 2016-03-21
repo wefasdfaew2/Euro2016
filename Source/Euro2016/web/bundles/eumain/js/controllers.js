@@ -1,15 +1,3 @@
-var modalVisible = false;
-function showModalBet(game, participation, bet){
-    modalVisible = true;
-    $('.bet-modal').modal('show');
-    console.log('show modal for game '+ game.id + ' participation ' + participation.id);
-}
-
-function hideModalBet(){
-    modalVisible = false;
-    console.log('hide modal');
-}
-
 var gamesController = ['$scope', 'Game', 'Participation', 'Bet', function($scope, Game, Participation, Bet){
     $scope.games = [];
     $scope.participations = [];
@@ -35,23 +23,34 @@ var gameController = ['$scope', function($scope){
                     return $scope.bets[i];
                 }
             }
+            return null;
         }
     };
 }];
 
 var betController = ['$scope', 'Bet', function($scope, Bet){
     return {
-        update: function(){
-            console.log('bet saved');
+        update: function(bet){
+            return Bet.save({
+                id: bet.id
+            },{
+                score1: bet.score1,
+                score2: bet.score2
+            });
         },
+        create: function(bet){
+            return Bet.save({},{
+                score1: bet.score1,
+                score2: bet.score2,
+                game: $scope.game.id,
+                pot: $scope.participation.pot.id
+            });
+        }
         delete: function(bet){
             console.log('bet ' + bet.id + ' deleted');
             bet.$delete({id: bet.id}, function(){
                 $scope.bet = null;
             });
-        },
-        create: function(){
-            console.log('bet created');
         }
     };
 }];

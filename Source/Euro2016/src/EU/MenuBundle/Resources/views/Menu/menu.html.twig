@@ -15,8 +15,8 @@
 				<li><a href="{{ path('eu_main_rules') }}">Rules</a></li>
 				{% if is_granted("IS_AUTHENTICATED_ANONYMOUSLY") %}
 				<li><a href="{{ path('pots_list') }}">Pots</a></li>
-				<li><a href="{{ path('bets_list') }}">Bets</a></li>
 				<li><a href="{{ path('games_list') }}">Games</a></li>
+				<li><a href="{{ path('bets_list') }}">Bets</a></li>
 				<li><a href="{{ path('teams_list') }}">Teams</a></li>
 				{% if is_granted("ROLE_ADMIN") %}
 				<li><a href="{{ path('sonata_admin_dashboard') }}">Admin</a></li>

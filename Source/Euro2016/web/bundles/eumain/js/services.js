@@ -1,5 +1,12 @@
 var gameFactory = function ($resource){
-    return $resource('games/:id');
+    var Game = $resource('games/:id',{},{
+        'getBets': {
+            method: 'GET',
+            url: 'games/:id/bets',
+            isArray: true
+        }
+    });
+    return Game;
 };
 
 var participationFactory = function ($resource){

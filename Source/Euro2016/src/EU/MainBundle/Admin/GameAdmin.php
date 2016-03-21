@@ -23,6 +23,9 @@ class GameAdmin extends Admin
             ->add('score2', 'text', array(
                 'required' => false
             ))
+            ->add('pool', 'text', array(
+                'required' => false
+            ))
         ->end()
         ->with('Date and time', array('class' => 'col-md-6'))
             ->add('startTime', 'sonata_type_datetime_picker')
@@ -33,6 +36,7 @@ class GameAdmin extends Admin
     {
         $datagridMapper->add('team1');
         $datagridMapper->add('team2');
+        $datagridMapper->add('pool');
         $datagridMapper->add('startTime', 'doctrine_orm_datetime_range', array(
                 'field_type' => 'sonata_type_datetime_range_picker'
         ));
@@ -47,6 +51,7 @@ class GameAdmin extends Admin
         ));
         $listMapper->add('score1', 'text');
         $listMapper->add('score2', 'text');
+        $listMapper->add('pool', 'text');
         $listMapper->add('startTime', 'datetime');
     }
 }

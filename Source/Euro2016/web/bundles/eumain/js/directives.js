@@ -28,17 +28,23 @@ var gameBetTable = function(){
             post: function postLink(scope, element, attrs, controllers) {
                 element.find('.create-bet').click(function(event){
                     event.preventDefault();
-                    showModalBet(scope.game, scope.participation, scope.bet);
+                    element.find('.modal').modal('show');
                 });
                 element.find('.edit-bet').click(function(event){
                     event.preventDefault();
-                    showModalBet(scope.game, scope.participation, scope.bet);
+                    element.find('.modal').modal('show');
                 });
                 element.find('.delete-bet').click(function(event){
                     event.preventDefault();
                     if(confirm('Are you sure?')){
-                        controllers[1].delete(scope.bet);
+                        controllers[1].delete(scope.bet, function(){
+
+                        });
                     }
+                });
+                element.find('.save-bet').click(function(event){
+                    event.preventDefault();
+                    controllers[1].update(scope.bet);
                 });
             }
         }
