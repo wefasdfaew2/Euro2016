@@ -1,0 +1,44 @@
+<td>[[participation.pot.name]]</td>
+<td align="center">
+    <span ng-show="bet">[[bet.score1 + "-" + bet.score2]]</span>
+    <a ng-hide="bet" class="btn btn-warning btn-xs create-bet" href="#">Bet now!</a>
+</td>
+<td>
+    <div ng-show="bet" class="btn-group pull-right">
+        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="edit-bet" href="#">Edit</a></li>
+            <li><a class="delete-bet" href="#">Delete</a></li>
+        </ul>
+    </div>
+    <div class="modal fade bet-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Bet on [[game.team1.shortName]] vs [[game.team2.shortName]] in [[participation.pot.name]]</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label" for="score1">Score [[game.team1.longName]]</label>
+                        <input type="number" name="score1" class="form-control" id="score1" ng-model="bet.score1">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="score2">Score [[game.team2.longName]]</label>
+                        <input type="number" name="score2" class="form-control" id="score2" ng-model="bet.score2">
+                    </div>
+                    <input type="hidden" name="game" value="[[game.id]]"/>
+                    <input type="hidden" name="pot" value="[[participation.pot.id]]"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary save-bet">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</td>
