@@ -6,6 +6,7 @@
 !app/logs/.gitkeep
 /app/phpunit.xml
 /bin/
+/web/bundles
 /composer.phar
 /vendor/
 /.ftpconfig

@@ -54,18 +54,26 @@
 </div>
 <div ng-controller="GamesController as gamesCtrl" class="row">
     <div class="col-sm-12">
-        <div class="col-sm-3 form-inline">
-            Order by:
-            <select class="form-control" ng-model="order">
-                <option selected="selected" value="startTime">Date/time</option>
-                <option value="-startTime">Date/time (reversed)</option>
-                <option value="team1.shortName">Team 1</option>
-                <option value="team2.shortName">Team 2</option>
-                <option value="pool">Pool</option>
-            </select>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="search">Search:</label>
+                <input name="search" type="text" class="form-control" ng-model="search"/>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="order">Order by:</label>
+                <select class="form-control" ng-model="order">
+                    <option selected="selected" value="startTime">Date/time</option>
+                    <option value="-startTime">Date/time (reversed)</option>
+                    <option value="team1.shortName">Team 1</option>
+                    <option value="team2.shortName">Team 2</option>
+                    <option value="pool">Pool</option>
+                </select>
+            </div>
         </div>
     </div>
-    <game ng-repeat="game in games | orderBy: order" game="game" participations="participations" bets="bets"></game>
+    <game ng-repeat="game in games | filter:search | orderBy: order" game="game" participations="participations" bets="bets"></game>
 </div>
 
 {% endblock %}

@@ -43,13 +43,16 @@ class FOSUBUserProvider extends BaseClass
         if($email <> '' AND null === $user)
         {
             $user = $this->userManager->findUserBy(array('emailCanonical' => strtolower($email)));
-            $service = $response->getResourceOwner()->getName();
-            $setter = 'set'.ucfirst($service);
-            $setter_id = $setter.'Id';
-            $setter_token = $setter.'AccessToken';
-            $user->$setter_id($username);
-            $user->$setter_token($response->getAccessToken());
-            $this->userManager->updateUser($user);
+            if($user !== null)
+            {
+                $service = $response->getResourceOwner()->getName();
+                $setter = 'set'.ucfirst($service);
+                $setter_id = $setter.'Id';
+                $setter_token = $setter.'AccessToken';
+                $user->$setter_id($username);
+                $user->$setter_token($response->getAccessToken());
+                $this->userManager->updateUser($user);
+            }
         }
 
         //when the user is registrating
@@ -73,7 +76,7 @@ class FOSUBUserProvider extends BaseClass
             $user->setEnabled(true);
             $this->userManager->updateUser($user);
             //Business logic data
-            
+
             return $user;
         }
         //if user exists - go with the HWIOAuth way
