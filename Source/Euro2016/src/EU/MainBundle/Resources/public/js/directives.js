@@ -43,13 +43,61 @@ var betController = ['$scope', 'Bet', function($scope, Bet){
             });
         },
         delete: function(bet){
-            console.log('bet ' + bet.id + ' deleted');
-            bet.$delete({id: bet.id}, function(){
+            return Bet.delete({id: bet.id}, function(){
                 $scope.bet = null;
             });
         }
     };
 }];
+
+var betTable = function(){
+    return {
+        templateUrl: '/bundles/eumain/js/bet.html',
+        restrict: 'A',
+        scope: {
+            bet: '='
+        },
+        require: 'betTable',
+        controller: betController,
+        link: {
+            post: function postLink(scope, element, attrs, controller){
+                element.find('.edit-bet').click(function(event){
+                    event.preventDefault();
+                    element.find('.modal').modal('show');
+                });
+                element.find('.delete-bet').click(function(event){
+                    event.preventDefault();
+                    if(confirm('Are you sure?')){
+                        controller.delete(scope.bet).$promise.then(function(){
+                            element.remove();
+                        });
+                    }
+                });
+                element.find('.save-bet').click(function(event){
+                    event.preventDefault();
+                    $(this).prop('disabled', true);
+                    if(scope.bet.id){
+                        controller.update(scope.bet).$promise.then(function(){
+                            element.find('.modal').modal('hide');
+                        }).catch(function(){
+                            scope.bet = null;
+                            element.find('.modal').modal('hide');
+                        }).finally(function(){
+                            $(this).prop('disabled', false);
+                        });
+                    } else {
+                        controller.create(scope.bet).$promise.then(function(){
+                            element.find('.modal').modal('hide');
+                        }).catch(function(){
+                            scope.bet = null;
+                            element.find('.modal').modal('hide');
+                        });
+                    }
+                });
+            }
+        }
+    };
+};
 
 var gameBetTable = function(){
     return {
@@ -77,8 +125,7 @@ var gameBetTable = function(){
                 element.find('.delete-bet').click(function(event){
                     event.preventDefault();
                     if(confirm('Are you sure?')){
-                        controllers[1].delete(scope.bet, function(){
-                        });
+                        controllers[1].delete(scope.bet);
                     }
                 });
                 element.find('.save-bet').click(function(event){
@@ -110,4 +157,5 @@ var gameBetTable = function(){
 var directives = angular.module('directives',[]);
 
 directives.directive('game', game);
+directives.directive('betTable', betTable);
 directives.directive('gameBetTable', gameBetTable);

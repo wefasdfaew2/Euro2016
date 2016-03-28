@@ -1,0 +1,55 @@
+<td>
+    <a href="pots/[[bet.pot.id]]">[[bet.pot.name]]</a>
+</td>
+<td>
+    <a href="games/[[bet.game.id]]">[[bet.game.team1.longName]] vs [[bet.game.team2.longName]]</a>
+</td>
+<td>
+    [[bet.game.pool]]
+</td>
+<td>
+    [[bet.score1 + '-' + bet.score2]]
+</td>
+<td>
+    [[bet.createdAt.date | dateToISO | date: 'd-MMM H:mm']]
+</td>
+<td>
+    [[bet.updatedAt.date | dateToISO | date: 'd-MMM H:mm']]
+</td>
+<td>
+    <div class="btn-group pull-right">
+        <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+        <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="edit-bet" href="#">Edit</a></li>
+            <li><a class="delete-bet" href="#">Delete</a></li>
+        </ul>
+    </div>
+    <div class="modal fade bet-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Bet on [[bet.game.team1.shortName]] vs [[bet.game.team2.shortName]] in [[bet.pot.name]]</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label" for="score1">Score [[bet.game.team1.longName]]</label>
+                        <input type="number" name="score1" class="form-control" id="score1" ng-model="bet.score1">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="score2">Score [[bet.game.team2.longName]]</label>
+                        <input type="number" name="score2" class="form-control" id="score2" ng-model="bet.score2">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary save-bet">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</td>

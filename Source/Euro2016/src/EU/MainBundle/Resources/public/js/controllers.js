@@ -15,6 +15,15 @@ var gamesController = ['$scope', 'Game', 'Participation', 'Bet', function($scope
     });
 }];
 
+var betsController = ['$scope', 'Bet', function($scope, Bet){
+    $scope.bets = [];
+    $scope.order = 'createdAt';
+
+    Bet.query(function(bets){
+        $scope.bets = bets;
+    });
+}];
+
 var paidParticipationsFilter = function (){
     return function (array){
         var filtered = [];
@@ -31,4 +40,5 @@ var controllers = angular.module('controllers',[
 ]);
 
 controllers.controller('GamesController', gamesController);
+controllers.controller('BetsController', betsController);
 controllers.filter('paidParticipationsFilter', paidParticipationsFilter);

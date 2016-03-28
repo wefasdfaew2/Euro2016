@@ -1,0 +1,63 @@
+{% extends "EUMainBundle::layout.html.twig" %}
+
+{% block title %}
+  Bets - {{ parent() }}
+{% endblock %}
+
+{% block content %}
+<script type="text/javascript" src="{{ asset('bundles/eumain/js/services.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/eumain/js/controllers.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/eumain/js/directives.js') }}"></script>
+<style>
+.loader-ajax img {
+    height: 50px;
+}
+</style>
+<div class="page-header">
+    <div class="loader-ajax pull-right" class="col-sm-12">
+        <img ng-src="{{ asset('img/loader.gif') }}"/>
+    </div>
+    <h1>Your Bets</h1>
+</div>
+<div ng-controller="BetsController as betsCtrl" class="row">
+    <div class="col-sm-12">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="search">Search:</label>
+                <input name="search" type="text" class="form-control" ng-model="search"/>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label for="order">Order by:</label>
+                <select class="form-control" ng-model="order">
+                    <option selected="selected" value="createdAt">Creation</option>
+                    <option value="-createdAt">Creation (reversed)</option>
+                    <option value="pot.name">Pot</option>
+                    <option value="game.team1.shortName">Team 1</option>
+                    <option value="game.team2.shortName">Team 2</option>
+                    <option value="game.pool">Pool</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <table class="table table-condensed table-striped">
+            <tr>
+                <th>Pot</th>
+                <th>Game</th>
+                <th>Pool</th>
+                <th>Score</th>
+                <th>Created at</th>
+                <th>Updated at</th>
+                <th></th>
+            </tr>
+            <tr bet-table ng-repeat="bet in bets | filter:search | orderBy: order as filteredBets" bet="bet"></tr>
+            <tr ng-hide="filteredBets.length">
+                <td colspan="7" align="center">No bets.</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
