@@ -224,6 +224,11 @@ class Game implements JsonSerializable
         return $now > $this->getStartTime();
     }
 
+    public function hasScore()
+    {
+        return !is_null($this->score1) AND !is_null($this->score2);
+    }
+
     /**
      * Set pool
      *

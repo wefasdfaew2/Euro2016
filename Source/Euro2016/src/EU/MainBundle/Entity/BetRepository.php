@@ -12,4 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class BetRepository extends EntityRepository
 {
+    public function getBetsForActivityFeed($limit)
+    {
+        $qb = $this->createQueryBuilder('b')
+                ->orderBy('b.updatedAt', 'DESC')
+                ->setMaxResults($limit);
+        return $qb->getQuery()->getResult();
+    }
 }

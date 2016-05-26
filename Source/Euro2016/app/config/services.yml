@@ -18,3 +18,8 @@ services:
         arguments: [~, EU\MainBundle\Entity\Game, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Content, label: Games }
+    admin.participation:
+        class: EU\MainBundle\Admin\ParticipationAdmin
+        arguments: [~, EU\MainBundle\Entity\Participation, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Content, label: Participations }

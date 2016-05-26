@@ -273,6 +273,33 @@ class Bet implements JsonSerializable
           $this->score2 = $bet->getScore2();
       }
 
+      public function getPoints()
+      {
+          if(!$this->getGame()->hasScore())
+          {
+              return 0;
+          }
+          else
+          {
+              if($this->getScore1() == $this->getGame()->getScore1() AND $this->getScore2() == $this->getGame()->getScore2())
+              {
+                  return 4;
+              }
+              elseif (($this->getScore1() - $this->getScore2()) == ($this->getGame()->getScore1() - $this->getGame()->getScore2()))
+              {
+                  return 2;
+              }
+              elseif (min(1, max(-1, $this->getScore1() - $this->getScore2())) == min(1, max(-1, $this->getGame()->getScore1() - $this->getGame()->getScore2())))
+              {
+                  return 1;
+              }
+              else
+              {
+                  return 0;
+              }
+          }
+      }
+
       public function __toString()
       {
           return '('.$this->getBetScores().') on '.$this->game;
@@ -288,7 +315,8 @@ class Bet implements JsonSerializable
               'score1'      => $this->score1,
               'score2'      => $this->score2,
               'createdAt'   => $this->createdAt,
-              'updatedAt'   => $this->updatedAt
+              'updatedAt'   => $this->updatedAt,
+              'points'      => $this->getPoints()
           ];
       }
 }

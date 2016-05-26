@@ -178,6 +178,8 @@ sonata_admin:
                         <h2>Welcome to the admin panel</h2>
                         <a href="/" class="btn btn-primary">Back to site</a>
 hwi_oauth:
+    http_client:
+        verify_peer: false #only for localhost
     firewall_name: main
     connect: ~
     resource_owners:

@@ -10,6 +10,9 @@ eu_main_rules:
 eu_main_tester:
     path:     /test
     defaults: { _controller: EUMainBundle:Index:test}
+eu_main_charge:
+    path:   /charge
+    defaults: { _controller: EUMainBundle:Index:charge }
 
 bets_list:
     path: /bets
@@ -146,3 +149,16 @@ teams_games_list:
     methods: [GET]
     requirements:
         id: "\d+"
+
+sms_test:
+    path: /sms/test
+    defaults: { _controller: EUMainBundle:SMS:test }
+    methods: [GET]
+sms_statuscallback:
+    path: /sms/statuscallback
+    defaults: { _controller: EUMainBundle:SMS:statusCallBack }
+    methods: [GET]
+sms_check_best:
+    path: /sms/check
+    defaults: { _controller: EUMainBundle:SMS:checkBets }
+    methods: [GET]

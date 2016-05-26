@@ -11,6 +11,12 @@
     [[bet.score1 + '-' + bet.score2]]
 </td>
 <td>
+    [[(bet.game.score1 || '') + '-' + (bet.game.score2 || '')]]
+</td>
+<td>
+    [[bet.points]]
+</td>
+<td>
     [[bet.createdAt.date | dateToISO | date: 'd-MMM H:mm']]
 </td>
 <td>

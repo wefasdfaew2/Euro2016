@@ -3,12 +3,14 @@
 namespace EU\MainBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use EU\MainBundle\Entity\Bet;
 use EU\MainBundle\Entity\Game;
 use EU\MainBundle\Entity\Team;
 use EU\MainBundle\Entity\Pot;
 use EU\MainBundle\Entity\Participation;
 use EU\MainBundle\Entity\ResponseHelperControllerInterface;
+use Stripe\Stripe;
 
 
 class IndexController extends Controller implements ResponseHelperControllerInterface
@@ -31,6 +33,7 @@ class IndexController extends Controller implements ResponseHelperControllerInte
         {
             return $this->render('EUMainBundle:Index:welcome.html.twig');
         }
+        /*
         $unpaidParticipations = array();
         foreach ($participations as $p)
         {
@@ -53,17 +56,120 @@ class IndexController extends Controller implements ResponseHelperControllerInte
                 Please contact the pot manager if you have already done so.'
             );
         }
+        */
         $rep = $em->getRepository('EUMainBundle:Bet');
-        $bets = $rep->findAll();
+        $bets = $rep->getBetsForActivityFeed(10);
         $rep = $em->getRepository('EUMainBundle:Game');
         $games = $rep->findAll();
+        $games_left = 0;
+        foreach ($games as $g)
+        {
+            if(!$g->hasScore())
+                $games_left++;
+        }
         $rep = $em->getRepository('ApplicationSonataUserBundle:User');
         $users = $rep->findAll();
+        $users_points = array();
+        $user_points = 0;
+        foreach($users as $u)
+        {
+            $points = $this->getPoints($u);
+            $users_points[$u->getId()] = $points;
+            if($u->getId() == $user->getId())
+                $user_points = $points;
+        }
+        arsort($users_points);
+        $rank = 0;
+        foreach ($users_points as $key => $value)
+        {
+            $rank++;
+            if($user->getId() == $key)
+                break;
+        }
+        array_slice($users_points, 0, 8, true);
+        $leaderboard = array();
+        foreach ($users_points as $key => $value)
+        {
+            $leaderboard[$this->findUser($users, $key)->__toString()] = $value;
+        }
         return $this->render('EUMainBundle:Index:index.html.twig', array(
             'bets'  => $bets,
             'games' => $games,
-            'users' => $users
+            'users' => $leaderboard,
+            'user_points'   => $user_points,
+            'user_rank'     => $rank,
+            'games_left'    => $games_left,
+            'money_pot'     => max((sizeof($users) - 2) * 20, 100)
         ));
+    }
+
+    private function getPoints($user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $rep = $em->getRepository('EUMainBundle:Bet');
+        $bets = $rep->findBy(array('user' => $user));
+        $points = 0;
+        foreach ($bets as $b)
+        {
+            if($b->getGame()->hasScore())
+            {
+                $points += $b->getPoints();
+            }
+        }
+        return $points;
+    }
+
+    private function findUser($users, $id)
+    {
+        foreach ($users as $u)
+        {
+            if($u->getId() == $id)
+                return $u;
+        }
+    }
+
+    public function chargeAction()
+    {
+        $stripe = array(
+          "secret_key"      => "sk_test_QfqDJzLloN8gMrsS8Vhmp1y4",
+          "publishable_key" => "pk_test_SHKaOoxRZVBJPBOIf9RKU9tA"
+        );
+
+        Stripe::setApiKey($stripe['secret_key']);
+
+        $request = $this->getRequest();
+        $token  = $request->request->get('stripeToken');
+        $user = $this->getUser();
+
+        try
+        {
+            $charge = \Stripe\Charge::create(array(
+                "amount" => 2250, // amount in cents, again
+                "currency" => "eur",
+                "source" => $token,
+                "description" => $user->getId().' '.$user->getFirstname().' '.$user->getLastname()
+            ));
+            $em = $this->getDoctrine()->getManager();
+            $rep = $em->getRepository('EUMainBundle:Pot');
+            $mainPot = $rep->find(1);
+            $participation = new Participation();
+            $participation->setUser($user);
+            $participation->setPot($mainPot);
+            $participation->setAcceptedAt(new \DateTime());
+            $participation->setPaidAt(new \DateTime());
+            $em->persist($participation);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                '<h3>Congratulations!</h3><p>Your payment has been accepted and you can now start betting on the upcoming <a href="'.$this->generateUrl('games_list').'">games</a>.</p>'
+            );
+            return $this->redirectToRoute('eu_main_homepage');
+        }
+        catch(\Stripe\Error\Card $e)
+        {
+            return new Response('not ok');
+        }
+
     }
 
     public function mainpotAction()

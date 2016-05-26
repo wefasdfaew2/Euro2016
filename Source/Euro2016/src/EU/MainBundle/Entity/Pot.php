@@ -173,4 +173,9 @@ class Pot implements JsonSerializable
              'createdAt'    => $this->createdAt
          ];
      }
+
+     public function __toString()
+     {
+         return $this->name;
+     }
 }

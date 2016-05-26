@@ -5,11 +5,72 @@
 {% endblock %}
 
 {% block content %}
+<style>
+.info-block {
+    padding-left: 25px;
+    font-size: 18px;
+}
+.info-block table {
+    width: 75%;
+    font-size: 14px;
+}
+.info-block table tr td:last-child, .info-block table tr th:last-child {
+    padding-right: 50px;
+    text-align: right;
+}
+.info-block table tr:last-child td {
+    font-weight: bold;
+    border-top: solid 1px #000000;
+}
+.payment-block {
+    width: 75%;
+    text-align: right;
+}
+</style>
 <div class="page-header">
-    <h1>Welcome to Euro 2016!</h1>
+    <h1>Main Pot Participation</h1>
 </div>
-<div>
-<p>Welcome to Euro 2016. This website is meant to bring together soccer enthousiasts. We recommend you have a look at the <a href="{{ path('eu_main_rules') }}">rules</a> before you start betting.</p>
-<p>Participation in the "Main Pot" is mandatory for every user. <a href="{{ path('eu_main_main_pot') }}" class="btn btn-primary">Participate in main pot</a></p>
+<div class="info-block">
+    <p>Before you can make your first bet, you need to pay your participation fee to the Main Pot. </p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1 x Participation amount for Main pot</td>
+                <td>20.00&euro;</td>
+            </tr>
+            <tr>
+                <td>1 x Auto text/SMS betting reminder (<em>one hour before match begins</em>)</td>
+                <td>2.00&euro;</td>
+            </tr>
+            <tr>
+                <td>1 x Credit Card processing fees (<em>with Stripe</em>)</td>
+                <td>0.50&euro;</td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td>22.50&euro;</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="payment-block">
+        <form action="{{ path('eu_main_charge') }}" method="POST">
+            <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="pk_test_SHKaOoxRZVBJPBOIf9RKU9tA"
+            data-amount="2250"
+            data-name="Euro2016"
+            data-description="Widget"
+            data-image="/img/documentation/checkout/marketplace.png"
+            data-locale="auto"
+            data-currency="eur">
+            </script>
+        </form>
+    </div>
 </div>
 {% endblock %}

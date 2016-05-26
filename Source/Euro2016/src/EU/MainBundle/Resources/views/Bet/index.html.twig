@@ -47,14 +47,16 @@
                 <th>Pot</th>
                 <th>Game</th>
                 <th>Pool</th>
+                <th>Bet</th>
                 <th>Score</th>
+                <th>Points</th>
                 <th>Created at</th>
                 <th>Updated at</th>
                 <th></th>
             </tr>
             <tr bet-table ng-repeat="bet in bets | filter:search | orderBy: order as filteredBets" bet="bet"></tr>
             <tr ng-hide="filteredBets.length">
-                <td colspan="7" align="center">No bets.</td>
+                <td colspan="7" align="center">No bets yet<span class="loader-ajax"> (loading from database)</span>.</td>
             </tr>
         </table>
     </div>

@@ -12,4 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class GameRepository extends EntityRepository
 {
+    public function findNextGames($limit)
+    {
+        $qb = $this->createQueryBuilder('g')
+                ->where('g.startTime > :now')
+                ->setParameter('now', new \DateTime())
+                ->setMaxResults($limit);
+        return $qb->getQuery()->getResult();
+    }
 }

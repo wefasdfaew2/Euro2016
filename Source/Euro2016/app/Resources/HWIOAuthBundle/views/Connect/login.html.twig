@@ -1,59 +1,64 @@
-<html lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "EUMainBundle::layout.html.twig" %}
+{% block title %}
+ Log In
+{% endblock %}
 
-		<title>Sign in</title>
-		{% block stylesheets %}
-		<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" type="text/css" />
-		{% endblock %}
-		{% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
+{% block content %}
 
-		<!-- Custom styles for this template -->
-		{% trans_default_domain 'FOSUserBundle' %}
-		<style type="text/css">
-			body {
-			  padding-top: 80px;
-			  padding-bottom: 40px;
-			  background-color: #252830;
-			}
-
-			.form-signin {
-			  width: 450px;
-			  padding: 25px;
-			  margin: 0 auto;
-			  border-radius: 15px;
-			  -webkit-border-radius: 15px;
-			  -moz-border-radius: 15px;
-			  -opera-border-radius: 15px;
-			  //background-color: #e3e3e3;
-			  text-align: center;
-			}
-			.form-signin .form-signin-heading {
-			  margin-bottom: 10px;
-			}
-			.form-signin-heading{
-				color: white;
-			}
-			.signin-button {
-				width: 300px;
-				margin: 10px;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="container">
-			<div class="form-signin">
+<style type="text/css">
+	#sitecontainer {
+		max-width: 750px;
+	}
+	.signin-button {
+		width: 200px;
+		margin: 10px;
+	}
+	.jumbotron .btn-lg {
+		font-size: 21px;
+		padding: 14px 24px;
+	}
+	.jumbotron h2 {
+		font-size: 45px;
+	}
+	.jumbotron li {
+		line-height: 25px;
+		margin-bottom: 15px;
+	}
+</style>
+<div class="jumbotron">
+    <h2>Welcome to Euro2016!</h2>
+	<p>This website is meant to bring together soccer enthusiasts around a betting competition. Here is how is works:</p>
+	<ol>
+		<li>Every member puts the same amount in a pot</li>
+		<li>To increase one's chance of winning, each member should make a bet on every game</li>
+		<li>Depending on the game final score, members collect points on their bets</li>
+		<li>At the end of the Euro tournament, the best members shared the pot among themselves</li>
+	</ol>
+	<p>We recommend you have a look at the <a href="{{ path('eu_main_rules') }}">rules</a> before you start betting.</p>
+	<center>
+        <button class="btn btn-lg btn-success" data-toggle="modal" data-target="#signInModal">I want to participate!</button></br>
+        or <a data-toggle="modal" data-target="#signInModal">sign in</a>
+    </center>
+</div>
+<div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle">
+	<div class="modal-dialog" role="document">
+	    <div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			  	<h3 class="modal-title" id="modalTitle">Sign In</h3>
+			</div>
+			<div class="modal-body">
+				<p>No need to create a new password, you can use your Facebook or Gmail account to sign in/log in:</p>
 				{% if error %}
 				<div class="alert alert-danger">{{ error|trans }}</div>
 				{% endif %}
-				<h2 class="form-signin-heading">Connection</h2>
-                {% for owner in hwi_oauth_resource_owners() %}
-				<div>
-                	<a class="" href="{{ hwi_oauth_login_url(owner) }}"><img class="signin-button" src="{{ asset('img/' ~ owner ~ '.jpg') }}"/></a>
-				</div>
-                {% endfor %}
+				<center>
+					{% for owner in hwi_oauth_resource_owners() %}
+					<a class="" href="{{ hwi_oauth_login_url(owner) }}"><img class="signin-button" src="{{ asset('img/' ~ owner ~ '.jpg') }}"/></a>
+					{% endfor %}
+				</center>
 			</div>
 		</div>
-	</body>
-</html>
+	</div>
+</div>
+{% endblock %}

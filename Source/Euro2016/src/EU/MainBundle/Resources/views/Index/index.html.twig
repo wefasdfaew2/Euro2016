@@ -6,9 +6,33 @@
 
 {% block content %}
 <style>
-/* apply a natural box layout model to all elements, but allowing components to change */
+.big_numbers div {
+    text-align: center;
+}
+.row div {
+    border-right: solid 1px #eeeeee;
+}
+.row div:last-child {
+    border-right: none;
+}
+.row div h3 {
+    text-align: center;
+    margin-top: 10px;
+    color: #777777;
+}
+.row table {
+    font-size: 14px;
+}
+.big_numbers .big_number {
+    font-size: 60px;
+    font-weight: bold;
+    color: rgb(204,0,51);
+}
 .activity-feed {
   padding: 15px;
+  height: 300px;
+  overflow-y: scroll;
+  text-align: left;
 }
 .activity-feed .feed-item {
   position: relative;
@@ -45,8 +69,27 @@
 
 </style>
 <div class="page-header">
-    <h1>Home</h1>
+    <h1>Dashboard</h1>
 </div>
+<div class="row big_numbers">
+    <div class="col-sm-3">
+        <h3>Money in the Pot</h3>
+        <span class="big_number">{{ money_pot }}&euro;</span>
+    </div>
+    <div class="col-sm-3">
+        <h3>Your points</h3>
+        <span class="big_number">{{ user_points }}</span>
+    </div>
+    <div class="col-sm-3">
+        <h3>Your rank</h3>
+        <span class="big_number">{{ user_rank }}</span>
+    </div>
+    <div class="col-sm-3">
+        <h3>Games left</h3>
+        <span class="big_number">{{ games_left }}</span>
+    </div>
+</div>
+<hr>
 <div class="row">
     <div class="col-sm-6">
         <h3>Activity Feed</h3>
@@ -54,7 +97,7 @@
             {% for bet in bets %}
             <div class="feed-item">
                 <div class="date">{{ bet.updatedAt | date('M j G:i') }}</div>
-                <div class="text"><a href="users/{{ bet.user.id }}">{{ bet.user }}</a> {{ bet.updatedAt == bet.createdAt ? 'added a' : 'updated his' }} bet on <a href="games/{{ bet.game.id }}">{{ bet.game }}</a> in <a href="pots/{{ bet.pot.id }}">{{ bet.pot.name }}</a></div>
+                <div class="text"><a href="users/{{ bet.user.id }}">{{ bet.user }}</a> {{ bet.updatedAt == bet.createdAt ? 'added a' : 'updated his' }} bet on <a href="games/{{ bet.game.id }}">{{ bet.game }}</a></div>
             </div>
             {% endfor %}
         </div>
@@ -66,7 +109,7 @@
                 <th>Game</th>
                 <th>Time</th>
             </tr>
-            {% for game in games|slice(0,5) %}
+            {% for game in games|slice(0,8) %}
             <tr>
                 <td>{{ game }}</td>
                 <td>{{ game.startTime | date('M j @ G:i') }}</td>
@@ -81,10 +124,10 @@
                 <th>User</th>
                 <th>Points</th>
             </tr>
-            {% for user in users|slice(0,5) %}
+            {% for username,points in users %}
             <tr>
-                <td>{{ user }}</td>
-                <td>4pts</td>
+                <td>{{ username }}</td>
+                <td>{{ points }}pts</td>
             </tr>
             {% endfor %}
         </table>
