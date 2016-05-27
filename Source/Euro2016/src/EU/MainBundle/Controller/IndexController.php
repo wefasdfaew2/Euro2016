@@ -117,7 +117,7 @@ class IndexController extends Controller implements ResponseHelperControllerInte
             'user_points'   => $user_points,
             'user_rank'     => $rank,
             'games_left'    => $games_left,
-            'money_pot'     => max((sizeof($users) - 2) * 20, 100)
+            'money_pot'     => max((sizeof($users) - 2) * 15, 150)
         ));
     }
 
@@ -162,7 +162,7 @@ class IndexController extends Controller implements ResponseHelperControllerInte
         try
         {
             $charge = \Stripe\Charge::create(array(
-                "amount" => 2250, // amount in cents, again
+                "amount" => 1750, // amount in cents, again
                 "currency" => "eur",
                 "source" => $token,
                 "description" => $user->getId().' '.$user->getFirstname().' '.$user->getLastname()

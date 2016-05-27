@@ -43,31 +43,37 @@ class SMSController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $rep = $em->getRepository('EUMainBundle:Game');
-        $game = $rep->findNextGames(1)[0];
+        $games = $rep->findNextGames(2);
         $now_2hours = (new \DateTime())->add(new \DateInterval('PT2H'));
-        if($game->getStartTime() < $now_2hours)
+        $nbr = 0;
+        foreach($games as $game)
         {
-            $rep = $em->getRepository('ApplicationSonataUserBundle:User');
-            $users = $rep->findAll();
-            $rep = $em->getRepository('EUMainBundle:Bet');
-            $nbr = 0;
-            foreach ($users as $u)
+            if($game->getStartTime() < $now_2hours)
             {
-                $bet = $rep->findBy(array('user' => $u, 'game' => $game));
-                if(!$bet)
+                $rep = $em->getRepository('ApplicationSonataUserBundle:User');
+                $users = $rep->findAll();
+                $rep = $em->getRepository('EUMainBundle:Bet');
+                foreach ($users as $u)
                 {
-                    $nbr++;
-                    $sms = new SMS($u, $game);
-                    $em->persist($sms);
-                    $em->flush();
-                    if($u->getPhone() != '')
+                    $bet = $rep->findBy(array('user' => $u, 'game' => $game));
+                    if(!$bet)
                     {
-                        $sms->send();
+                        $nbr++;
+                        $sms = new SMS($u, $game);
+                        $em->persist($sms);
                         $em->flush();
+                        if($u->getPhone() != '')
+                        {
+                            $sms->send();
+                            $em->flush();
+                        }
                     }
                 }
             }
-            return new Response('ok sms: '.$nbr);
+        }
+        if($nbr > 0)
+        {
+            return new Response('ok sms: '.$nbr);            
         }
         else
         {
