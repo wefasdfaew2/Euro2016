@@ -24,4 +24,30 @@ class UserController extends Controller implements ResponseHelperControllerInter
         return $response->renderResponse();
     }
 
+    public function updatePhoneAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $request = $this->getRequest();
+        $phone = $request->request->get('phone');
+        if(!is_numeric($phone) OR $phone =='')
+        {
+            $this->get('session')->getFlashBag()->add(
+                'danger',
+                '<h3>Error</h3>The phone number should only contain numbers (e.g.: 32475123456)!
+                '
+            );
+        }
+        else
+        {
+            $user->setPhone($phone);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                'Your phone number has correctly been updated.'
+            );
+        }
+        return $this->redirectToRoute('eu_main_homepage');
+    }
+
 }

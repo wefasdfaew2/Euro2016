@@ -52,7 +52,7 @@ class Bet implements JsonSerializable
     private $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="EU\MainBundle\Entity\Game")
+     * @ORM\ManyToOne(targetEntity="EU\MainBundle\Entity\Game", inversedBy="bets")
      * @ORM\JoinColumn(nullable=false)
      */
     private $game;

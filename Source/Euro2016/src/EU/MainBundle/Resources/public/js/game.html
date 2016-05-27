@@ -12,6 +12,16 @@
             <div class="names">
                 [[game.team1.longName]] vs [[game.team2.longName]]
             </div>
+            <div class="stats">
+                <h4>Stats</h4>
+                <table>
+                    <tr ng-repeat="(key, value) in game.stats">
+                        <td><img src="img/bar.png" width="[[ value[1] * 100 ]]px"/></td>
+                        <td>[[key]]</td>
+                        <td><img src="img/bar.png" width="[[ value[2] * 100 ]]px"/></td>
+                    </tr>
+                </table>
+            </div>
         </div>
         <table class="table table-condensed table-striped">
             <tr>
@@ -21,7 +31,7 @@
             </tr>
             <tr game-bet-table ng-repeat="participation in participations | paidParticipationsFilter as filteredParticipations" participation="participation" game="game"></tr>
             <tr ng-hide="filteredParticipations.length">
-                <td colspan="3" align="center">You have to pay your participation to the [[participations[0].pot.name]] first</td>
+                <td colspan="3" align="center">You have to pay your participation to the Pot first</td>
             </tr>
         </table>
     </div>

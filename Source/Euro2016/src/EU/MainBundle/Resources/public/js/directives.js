@@ -20,6 +20,13 @@ var game = function (){
             game: '=',
             participations: '=',
             bets: '='
+        },
+        link: {
+            post: function postLink(scope, element, attrs, controller){
+                element.find('.stats h4').click(function(event){
+                    element.find('.stats table').toggle();
+                });
+            }
         }
     }
 };

@@ -28,10 +28,17 @@ class SMS
 
     public function send()
     {
-        $this->sentAt = new \Datetime();
-        $url = self::API_URL.'apiKey='.urlencode(self::API_KEY).'&content='.urlencode($this->text).'&num='.$this->user->getPhone().'&msgid='.$this->id;
-        $response = file($url);
-        return $response == 'sended';
+        if($this->user->getPhone() != '')
+        {
+            $this->sentAt = new \Datetime();
+            $url = self::API_URL.'apiKey='.urlencode(self::API_KEY).'&content='.urlencode($this->text).'&num='.$this->user->getPhone().'&msgid='.$this->id;
+            $response = file($url);
+            return $response == 'sended';
+        }
+        else
+        {
+            return false;
+        }
     }
 
 

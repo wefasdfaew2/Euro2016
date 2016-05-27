@@ -4,7 +4,7 @@
     <a ng-hide="bet" class="btn btn-warning btn-xs create-bet" href="#">Bet now!</a>
 </td>
 <td>
-    <div ng-show="bet" class="btn-group pull-right">
+    <div ng-show="bet && !game.hasStarted" class="btn-group pull-right">
         <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
         <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="caret"></span>

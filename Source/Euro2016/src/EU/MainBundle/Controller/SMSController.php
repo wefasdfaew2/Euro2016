@@ -60,8 +60,11 @@ class SMSController extends Controller
                     $sms = new SMS($u, $game);
                     $em->persist($sms);
                     $em->flush();
-                    $sms->send();
-                    $em->flush();
+                    if($u->getPhone() != '')
+                    {
+                        $sms->send();
+                        $em->flush();
+                    }
                 }
             }
             return new Response('ok sms: '.$nbr);

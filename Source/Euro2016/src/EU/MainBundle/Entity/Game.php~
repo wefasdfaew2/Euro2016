@@ -46,7 +46,7 @@ class Game implements JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="pool", type="string", length=255)
+     * @ORM\Column(name="pool", type="string", length=255, nullable=true)
      */
     private $pool;
 
@@ -61,6 +61,11 @@ class Game implements JsonSerializable
      * @ORM\JoinColumn(nullable=false)
      */
     private $team2;
+
+    /**
+     * @ORM\OneToMany(targetEntity="EU\MainBundle\Entity\Bet", mappedBy="game")
+     */
+     private $bets;
 
 
     /**
@@ -213,7 +218,8 @@ class Game implements JsonSerializable
             'team2'       => $this->team2->jsonSerialize(),
             'score1'      => $this->score1,
             'score2'      => $this->score2,
-            'startTime'   => $this->startTime
+            'startTime'   => $this->startTime,
+            'pool'        => $this->pool
         ];
     }
 
@@ -221,5 +227,33 @@ class Game implements JsonSerializable
     {
         $now = new \DateTime();
         return $now > $this->getStartTime();
+    }
+
+    public function hasScore()
+    {
+        return !is_null($this->score1) AND !is_null($this->score2);
+    }
+
+    /**
+     * Set pool
+     *
+     * @param string $pool
+     * @return Game
+     */
+    public function setPool($pool)
+    {
+        $this->pool = $pool;
+
+        return $this;
+    }
+
+    /**
+     * Get pool
+     *
+     * @return string
+     */
+    public function getPool()
+    {
+        return $this->pool;
     }
 }

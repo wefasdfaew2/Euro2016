@@ -57,6 +57,24 @@ class IndexController extends Controller implements ResponseHelperControllerInte
             );
         }
         */
+        if($user->getPhone() == '')
+        {
+            $this->get('session')->getFlashBag()->add(
+                'warning',
+                '<h3>Update your phone number</h3>
+                It looks like you have not yet provided your phone number for the text reminders.
+                Your phone number should only contain numbers (without 00 or +) and be in international format (e.g.: 32475123456).</br></br>
+                <form class="form-inline" action="'.$this->generateUrl('eu_main_update_phone').'" method="POST">
+                <div style="width: 250px" class="input-group">
+                    <input type="number" class="form-control" name="phone" placeholder="32475123456"/>
+                    <span class="input-group-btn">
+                        <input type="submit" class="btn btn-primary" value="Save"/>
+                    </span>
+                </div>
+                </form>
+                '
+            );
+        }
         $rep = $em->getRepository('EUMainBundle:Bet');
         $bets = $rep->getBetsForActivityFeed(10);
         $rep = $em->getRepository('EUMainBundle:Game');

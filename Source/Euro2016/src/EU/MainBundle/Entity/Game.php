@@ -62,6 +62,11 @@ class Game implements JsonSerializable
      */
     private $team2;
 
+    /**
+     * @ORM\OneToMany(targetEntity="EU\MainBundle\Entity\Bet", mappedBy="game")
+     */
+     private $bets;
+
 
     /**
      * Get id
@@ -205,6 +210,46 @@ class Game implements JsonSerializable
         }
     }
 
+    public function getStats()
+    {
+        $bets = $this->getBets();
+        $s = sizeof($bets);
+        $stats = array(
+                    '0' => array(1 => 0, 2 => 0),
+                    '1' => array(1 => 0, 2 => 0),
+                    '2' => array(1 => 0, 2 => 0),
+                    '3' => array(1 => 0, 2 => 0),
+                    '3+' => array(1 => 0, 2 => 0)
+        );
+        foreach ($bets as $b)
+        {
+            if($b->getScore1() < 4)
+            {
+                $stats[$b->getScore1()][1] += (1 / $s);
+            }
+            else {
+                $stats['3+'][1] += (1 / $s);
+            }
+            if($b->getScore2() < 4)
+            {
+                $stats[$b->getScore2()][2] += (1 / $s);
+            }
+            else {
+                $stats['3+'][2] += (1 / $s);
+            }
+        }
+        /*
+        foreach ($stats as $goals => $values)
+        {
+            foreach ($values as $team => $value)
+            {
+                $stats[$goals][$team] = $value/$s;
+            }
+        }
+        */
+        return $stats;
+    }
+
     public function jsonSerialize()
     {
         return [
@@ -214,7 +259,9 @@ class Game implements JsonSerializable
             'score1'      => $this->score1,
             'score2'      => $this->score2,
             'startTime'   => $this->startTime,
-            'pool'        => $this->pool
+            'hasStarted'  => $this->hasStarted(),
+            'pool'        => $this->pool,
+            'stats'       => $this->getStats()
         ];
     }
 
@@ -250,5 +297,45 @@ class Game implements JsonSerializable
     public function getPool()
     {
         return $this->pool;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->bets = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add bets
+     *
+     * @param \EU\MainBundle\Entity\Bet $bets
+     * @return Game
+     */
+    public function addBet(\EU\MainBundle\Entity\Bet $bet)
+    {
+        $this->bets[] = $bet;
+        $bet->setGame($this);
+        return $this;
+    }
+
+    /**
+     * Remove bets
+     *
+     * @param \EU\MainBundle\Entity\Bet $bets
+     */
+    public function removeBet(\EU\MainBundle\Entity\Bet $bets)
+    {
+        $this->bets->removeElement($bets);
+    }
+
+    /**
+     * Get bets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBets()
+    {
+        return $this->bets;
     }
 }

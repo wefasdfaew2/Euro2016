@@ -2,3 +2,7 @@ eu_user_list:
     path: /users
     defaults: {_controller:ApplicationSonataUserBundle:User:list}
     methods: [GET]
+eu_main_update_phone:
+    path: /users/updatephone
+    defaults: { _controller:ApplicationSonataUserBundle:User:updatePhone}
+    methods: [POST]
