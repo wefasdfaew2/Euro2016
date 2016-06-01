@@ -1,10 +1,8 @@
 var gamesController = ['$scope', '$location', 'Game', 'Participation', 'Bet', function($scope, $location, Game, Participation, Bet){
     $scope.games = [];
     $scope.participations = [];
-    $scope.bet = [];
+    $scope.bets = [];
     $scope.order = 'startTime';
-
-
 
     Bet.query(function(bets){
         $scope.bets = bets;
@@ -14,12 +12,9 @@ var gamesController = ['$scope', '$location', 'Game', 'Participation', 'Bet', fu
                 $scope.games = games;
                 var path = location.pathname;
                 var reg = path.match(/(\d+)/);
-                if(reg)
-                {
-                    angular.forEach($scope.games, function(game)
-                    {
-                        if(game.id == reg[1])
-                        {
+                if(reg){
+                    angular.forEach($scope.games, function(game){
+                        if(game.id == reg[1]){
                             $scope.search = game.startTime.date;
                         }
                     });

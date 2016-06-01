@@ -162,7 +162,7 @@ class IndexController extends Controller implements ResponseHelperControllerInte
         try
         {
             $charge = \Stripe\Charge::create(array(
-                "amount" => 1750, // amount in cents, again
+                "amount" => 1650, // amount in cents, again
                 "currency" => "eur",
                 "source" => $token,
                 "description" => $user->getId().' '.$user->getFirstname().' '.$user->getLastname()

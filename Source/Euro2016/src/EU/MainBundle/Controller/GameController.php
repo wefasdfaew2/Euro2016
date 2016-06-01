@@ -18,6 +18,13 @@ class GameController extends Controller implements ResponseHelperControllerInter
     public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $rep = $em->getRepository('EUMainBundle:Participation');
+        $user = $this->getUser();
+        $participations = $rep->findBy(array('user' => $user));
+        if(sizeof($participations) == 0)
+        {
+            return $this->render('EUMainBundle:Index:welcome.html.twig');
+        }
         $rep = $em->getRepository('EUMainBundle:Game');
         $games = $rep->findAll();
         $response = new ResponseHelper($this, Response::HTTP_OK, $games);

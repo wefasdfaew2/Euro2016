@@ -56,7 +56,7 @@
             </tr>
             <tr bet-table ng-repeat="bet in bets | filter:search | orderBy: order as filteredBets" bet="bet"></tr>
             <tr ng-hide="filteredBets.length">
-                <td colspan="7" align="center">No bets yet<span class="loader-ajax"> (loading from database)</span>.</td>
+                <td colspan="9" align="center">No bets yet<span class="loader-ajax"> (loading from database)</span>.</td>
             </tr>
         </table>
     </div>

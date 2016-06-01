@@ -21,8 +21,15 @@ class BetController extends Controller implements ResponseHelperControllerInterf
     public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $rep = $em->getRepository('EUMainBundle:Participation');
+        $user = $this->getUser();
+        $participations = $rep->findBy(array('user' => $user));
+        if(sizeof($participations) == 0)
+        {
+            return $this->render('EUMainBundle:Index:welcome.html.twig');
+        }
         $rep = $em->getRepository('EUMainBundle:Bet');
-        $bets = $rep->findBy(array('user' => $this->getUser()));
+        $bets = $rep->findBy(array('user' => $user));
         $response = new ResponseHelper($this, Response::HTTP_OK, $bets);
         return $response->renderResponse();
     }

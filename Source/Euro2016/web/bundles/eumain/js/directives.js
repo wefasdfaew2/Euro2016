@@ -57,6 +57,10 @@ var betController = ['$scope', 'Bet', function($scope, Bet){
     };
 }];
 
+function checkBet(bet){
+    return bet !== '' && bet >= 0 && $.isNumeric(bet);
+}
+
 var betTable = function(){
     return {
         templateUrl: '/bundles/eumain/js/bet.html',
@@ -82,6 +86,14 @@ var betTable = function(){
                 });
                 element.find('.save-bet').click(function(event){
                     event.preventDefault();
+                    if (!checkBet(scope.bet.score1)){
+                        element.find('#score1').parent().addClass('has-error');
+                        return false;
+                    }
+                    if (!checkBet(scope.bet.score2)){
+                        element.find('#score2').parent().addClass('has-error');
+                        return false;
+                    }
                     $(this).prop('disabled', true);
                     if(scope.bet.id){
                         controller.update(scope.bet).$promise.then(function(){
@@ -90,7 +102,9 @@ var betTable = function(){
                             scope.bet = null;
                             element.find('.modal').modal('hide');
                         }).finally(function(){
-                            $(this).prop('disabled', false);
+                            element.find('.save-bet').prop('disabled', false);
+                            element.find('#score1').parent().removeClass('has-error');
+                            element.find('#score2').parent().removeClass('has-error');
                         });
                     } else {
                         controller.create(scope.bet).$promise.then(function(){
@@ -137,6 +151,14 @@ var gameBetTable = function(){
                 });
                 element.find('.save-bet').click(function(event){
                     event.preventDefault();
+                    if (!checkBet(scope.bet.score1)){
+                        element.find('#score1').parent().addClass('has-error');
+                        return false;
+                    }
+                    if (!checkBet(scope.bet.score2)){
+                        element.find('#score2').parent().addClass('has-error');
+                        return false;
+                    }
                     $(this).prop('disabled', true);
                     if(scope.bet.id){
                         controllers[1].update(scope.bet).$promise.then(function(){
@@ -145,7 +167,9 @@ var gameBetTable = function(){
                             scope.bet = null;
                             element.find('.modal').modal('hide');
                         }).finally(function(){
-                            $(this).prop('disabled', false);
+                            element.find('.save-bet').prop('disabled', false);
+                            element.find('#score1').parent().removeClass('has-error');
+                            element.find('#score2').parent().removeClass('has-error');
                         });
                     } else {
                         controllers[1].create(scope.bet).$promise.then(function(){

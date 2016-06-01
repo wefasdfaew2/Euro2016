@@ -23,7 +23,7 @@
     [[bet.updatedAt.date | dateToISO | date: 'd-MMM H:mm']]
 </td>
 <td>
-    <div class="btn-group pull-right">
+    <div ng-show="!bet.game.hasStarted" class="btn-group pull-right">
         <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
         <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="caret"></span>
