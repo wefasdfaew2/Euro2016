@@ -24,7 +24,10 @@
 }
 .payment-block {
     width: 75%;
-    text-align: right;
+    text-align: center;
+}
+.payment-block .modal {
+    text-align: left;
 }
 </style>
 <div class="page-header">
@@ -63,7 +66,7 @@
         <form action="{{ path('eu_main_charge') }}" method="POST">
             <script
             src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="pk_test_SHKaOoxRZVBJPBOIf9RKU9tA"
+            data-key="pk_live_Ck7WpGzSQpbsJZEBdbLHB74B"
             data-amount="1650"
             data-name="Euro2016"
             data-description="Widget"
@@ -72,6 +75,30 @@
             data-currency="eur">
             </script>
         </form>
+        - or -</br>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#banktransfermodal">Pay by bank transfer</button>
+        <div class="modal fade" tabindex="-1" role="dialog" id="banktransfermodal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Bank Transfer Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            <li>Bank account holder: Quentin Bodart</li>
+                            <li>Bank account number: BE07 0632 3451 0366</li>
+                            <li>BIC code: GKCCBEBB</li>
+                            <li>Amount: 16.00&euro;</li>
+                        </ul>
+                        <p>As soon as I can confirm receipt of the payment, I will open the account and notify you by email.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
