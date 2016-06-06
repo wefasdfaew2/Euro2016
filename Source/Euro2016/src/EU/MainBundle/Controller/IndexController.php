@@ -87,14 +87,24 @@ class IndexController extends Controller implements ResponseHelperControllerInte
         }
         $rep = $em->getRepository('ApplicationSonataUserBundle:User');
         $users = $rep->findAll();
+        $rep = $em->getRepository('EUMainBundle:Participation');
+        $participations = $rep->findAll();
+        $participations_users_id = array();
+        foreach ($participations as $p)
+        {
+            array_push($participations_users_id, $p->getUser()->getId());
+        }
         $users_points = array();
         $user_points = 0;
         foreach($users as $u)
         {
-            $points = $this->getPoints($u);
-            $users_points[$u->getId()] = $points;
-            if($u->getId() == $user->getId())
-                $user_points = $points;
+            if(in_array($u->getId(), $participations_users_id))
+            {
+                $points = $this->getPoints($u);
+                $users_points[$u->getId()] = $points;
+                if($u->getId() == $user->getId())
+                    $user_points = $points;
+            }
         }
         arsort($users_points);
         $rank = 0;
@@ -117,7 +127,7 @@ class IndexController extends Controller implements ResponseHelperControllerInte
             'user_points'   => $user_points,
             'user_rank'     => $rank,
             'games_left'    => $games_left,
-            'money_pot'     => max((sizeof($users) - 2) * 15, 150)
+            'money_pot'     => max((sizeof($participations) - 2) * 15, 150)
         ));
     }
 
@@ -149,8 +159,8 @@ class IndexController extends Controller implements ResponseHelperControllerInte
     public function chargeAction()
     {
         $stripe = array(
-          "secret_key"      => "sk_test_QfqDJzLloN8gMrsS8Vhmp1y4",
-          "publishable_key" => "pk_test_SHKaOoxRZVBJPBOIf9RKU9tA"
+          "secret_key"      => "sk_live_FciW9o6CK97VBZb3zu6Xl12Z",
+          "publishable_key" => "pk_live_Ck7WpGzSQpbsJZEBdbLHB74B"
         );
 
         Stripe::setApiKey($stripe['secret_key']);
@@ -161,11 +171,14 @@ class IndexController extends Controller implements ResponseHelperControllerInte
 
         try
         {
+            $customer = \Stripe\Customer::create(array(
+              "source" => $token,
+              "description" => $user->getId().' '.$user->getFirstname().' '.$user->getLastname()
+            ));
             $charge = \Stripe\Charge::create(array(
                 "amount" => 1650, // amount in cents, again
                 "currency" => "eur",
-                "source" => $token,
-                "description" => $user->getId().' '.$user->getFirstname().' '.$user->getLastname()
+                "customer" => $customer->id
             ));
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('EUMainBundle:Pot');
@@ -185,9 +198,22 @@ class IndexController extends Controller implements ResponseHelperControllerInte
         }
         catch(\Stripe\Error\Card $e)
         {
-            return new Response('not ok');
+            $body = $e->getJsonBody();
+            $err  = $body['error'];
+            $error = 'Status is:' . $e->getHttpStatus() . '\n';
+            $error .= 'Type is:' . $err['type'] .'\n';
+            $error .= 'Code is:' . $err['code'] .'\n';
+            $error .= 'Message is:' . $err['message'];
+            return $this->render('EUMainBundle:Index:wire_error.html.twig', array(
+                'error' => $error
+            ));
         }
-
+        catch (Exception $e)
+        {
+            return $this->render('EUMainBundle:Index:wire_error.html.twig', array(
+                'error' => 'There was a general/unidentified issue during the transaction'
+            ));
+        }
     }
 
     public function mainpotAction()

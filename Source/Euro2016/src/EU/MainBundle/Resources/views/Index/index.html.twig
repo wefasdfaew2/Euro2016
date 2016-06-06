@@ -111,7 +111,7 @@
             </tr>
             {% for game in games|slice(0,8) %}
             <tr>
-                <td>{{ game }}</td>
+                <td><a href="games/{{ game.id }}">{{ game }}</a></td>
                 <td>{{ game.startTime | date('M j @ G:i') }}</td>
             </tr>
             {% endfor %}
