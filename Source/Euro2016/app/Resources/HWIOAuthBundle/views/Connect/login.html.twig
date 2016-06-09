@@ -56,6 +56,8 @@
 					{% for owner in hwi_oauth_resource_owners() %}
 					<a class="" href="{{ hwi_oauth_login_url(owner) }}"><img class="signin-button" src="{{ asset('img/' ~ owner ~ '.jpg') }}"/></a>
 					{% endfor %}
+                    </br>or</br>
+                    <a href="{{ path('fos_user_security_login') }}" class="btn btn-default">Login page</a>
 				</center>
 			</div>
 		</div>

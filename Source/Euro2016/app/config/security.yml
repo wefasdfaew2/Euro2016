@@ -33,6 +33,13 @@ security:
                 domain: ~ # Defaults to the current domain from $_SERVER
                 always_remember_me: true
                 remember_me_parameter: _remember_me
+            form_login:
+                provider:       fos
+                login_path:     /login
+                check_path:     /login_check
+                failure_path:   null
+                default_target_path: /
+                use_forward:    false
             oauth:
                 failure_path: /connect
                 login_path: /connect

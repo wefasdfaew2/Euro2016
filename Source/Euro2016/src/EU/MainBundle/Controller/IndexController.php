@@ -114,7 +114,7 @@ class IndexController extends Controller implements ResponseHelperControllerInte
             if($user->getId() == $key)
                 break;
         }
-        array_slice($users_points, 0, 8, true);
+        $users_points = array_slice($users_points, 0, 8, true);
         $leaderboard = array();
         foreach ($users_points as $key => $value)
         {
@@ -127,7 +127,7 @@ class IndexController extends Controller implements ResponseHelperControllerInte
             'user_points'   => $user_points,
             'user_rank'     => $rank,
             'games_left'    => $games_left,
-            'money_pot'     => max((sizeof($participations) - 2) * 15, 150)
+            'money_pot'     => max((sizeof($participations) - 1) * 15, 150)
         ));
     }
 

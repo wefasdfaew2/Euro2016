@@ -23,6 +23,7 @@ var game = function (){
         },
         link: {
             post: function postLink(scope, element, attrs, controller){
+                element.find('[data-toggle="tooltip"]').tooltip();
                 element.find('.stats h4').click(function(event){
                     element.find('.stats table').toggle();
                 });

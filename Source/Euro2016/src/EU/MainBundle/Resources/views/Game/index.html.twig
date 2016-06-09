@@ -5,9 +5,18 @@
 {% endblock %}
 
 {% block content %}
-<script type="text/javascript" src="{{ asset('bundles/eumain/js/services.js?v=1.0') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/eumain/js/controllers.js?v=1.0') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/eumain/js/directives.js?v=1.0') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/eumain/js/services.js?v=2.0') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/eumain/js/controllers.js?v=2.0') }}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('button.show-stats').click(function(){
+        $('.stats table').show();
+    });
+    $('button.hide-stats').click(function(){
+        $('.stats table').hide();
+    });
+});
+</script>
 <style>
 .game {
     //padding: 10px;
@@ -85,8 +94,8 @@
     </div>
     <h1>Games</h1>
 </div>
-<div ng-controller="GamesController as gamesCtrl" class="row">
-    <div class="col-sm-12">
+<div ng-controller="GamesController as gamesCtrl">
+    <div class="row">
         <div class="col-sm-3">
             <div class="form-group">
                 <label for="search">Search:</label>
@@ -105,8 +114,17 @@
                 </select>
             </div>
         </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label>Stats:</label></br>
+                <button style="width: 48%" class="btn btn-info show-stats">Show all stats</button>
+                <button style="width: 48%" class="btn btn-info hide-stats">Hide all stats</button>
+            </div>
+        </div>
     </div>
-    <game ng-repeat="game in games | filter:search | orderBy: order" game="game" participations="participations" bets="bets"></game>
+    <div class="row">
+        <game ng-repeat="game in games | filter:search | orderBy: order" game="game" participations="participations" bets="bets"></game>
+    </div>
 </div>
 
 {% endblock %}
